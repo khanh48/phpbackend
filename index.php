@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "./includes/connect.php";
 ?>
 <!DOCTYPE html>
@@ -14,7 +13,9 @@ require "./includes/connect.php";
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
+    <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/main.js"></script>
+    <script src="./lib/js/ajax.js"></script>
     <!--Xoá phần input file default-->
     <script>
     (function(e, t, n) {
@@ -103,8 +104,14 @@ require "./includes/connect.php";
                         $username = $row['user_name'];
                         $post = $row['post_id'];
                         $poster = $con->query("SELECT * FROM users WHERE user_name = '$username'")->fetch_assoc();
-                        $result = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$post'")->fetch_assoc();
-                        $total_cmt = $result['total'] > 0 ? $result['total'] : '';
+                        $result_cmt = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$post'")->fetch_assoc();
+                        $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE post_id = '$post' AND is_post = true")->fetch_assoc();
+                        $total_cmt = $result_cmt['total'] > 0 ? $result_cmt['total'] : '';
+                        $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
+                        $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE post_id = '$post' AND user_name = '$my_id'")->fetch_assoc();
+                        $is_liked = '';
+                        if ($liked["liked"] > 0)
+                            $is_liked = "fas-liked";
                         echo "<div class='content'>
                         <div>
                             <div class=' c-header'>
@@ -128,10 +135,13 @@ require "./includes/connect.php";
                         <div class='m-0' style='text-align: end;'><span class='read-more'></span></div>
                         <hr class='m-0'>
                         <div class='interactive p-1 m-0'>
-                            <button class='like p-1'><i class='fas fa-heart'></i>
-                                <span class='count-like'></span>
+                            <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "');\">
+                                <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "'></i>
+                                <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
                             </button>
-                            <button class='comment p-1' onclick=\"window.location.href='./post.php?id=" . $row['post_id'] . "'\"><i class='fas fa-comment'></i><span class='count-comment'><a href='./post.php'></a>" . $total_cmt . "</span>
+                            <button class='comment p-1' onclick=\"window.location.href='./post.php?id=" . $row['post_id'] . "'\">
+                            <i class='fas fa-comment'></i>
+                            <span class='count-comment'><a href='./post.php'></a>" . $total_cmt . "</span>
     
                                 </svg>
                             </button>

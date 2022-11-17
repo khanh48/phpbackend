@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "./includes/connect.php";
 ?>
 <!DOCTYPE html>
@@ -14,7 +13,9 @@ require "./includes/connect.php";
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
+    <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/main.js"></script>
+    <script src="./lib/js/ajax.js"></script>
 </head>
 
 <body>
@@ -31,6 +32,12 @@ require "./includes/connect.php";
 
                     $sql = "SELECT * FROM posts WHERE post_id = '$pid'";
                     $result = $con->query($sql);
+                    $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE post_id = '$pid' AND is_post = true")->fetch_assoc();
+                    $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
+                    $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE post_id = '$pid' AND user_name = '$my_id'")->fetch_assoc();
+                    $is_liked = '';
+                    if ($liked["liked"] > 0)
+                        $is_liked = "fas-liked";
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
                         $username = $row['user_name'];
@@ -58,23 +65,29 @@ require "./includes/connect.php";
                 <div class='m-0' style='text-align: end;'><span class='read-more'></span></div>
                 <hr class='m-0'>
                 <div class='interactive p-1 m-0'>
-                    <button class='like p-1'><i class='fas fa-heart'></i>
-                        <span class='count-like'></span>
+                    <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "');\">
+                        <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "''></i>
+                        <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
                     </button>
                     <button class='share p-1'><i class='fas fa-share'></i><span class='count-share'></span>
                     </button>
                 </div>
-            </div>";
-                        echo "<div class='content'>
-            <div> <form method='post'>
-            <div class='form-group p-1'>
-                <textarea class='form-control f-sm' placeholder='Bình luận' name='comment' oninvalid=\"this.setCustomValidity('Vui lòng nhập nội dung cần bình luận.')\" required></textarea>
-            </div>
-            <button type='submit' name='send' class='btn btn-danger mb-2'>Enter</button>
-            </form>
-                </div>
-            </div>";
+            </div>"; ?>
 
+                <div class='content'>
+                    <div>
+                        <form method='post'>
+                            <div class='form-group p-1'>
+                                <textarea class='form-control f-sm' placeholder='Bình luận' name='comment'
+                                    oninvalid="this.setCustomValidity('Vui lòng nhập nội dung cần bình luận.')"
+                                    required></textarea>
+                            </div>
+                            <button type='submit' name='send' class='btn btn-danger mb-2'>Enter</button>
+                        </form>
+                    </div>
+                </div>
+
+                <?php
                         if (isset($_POST['send'])) {
                             $comment = $_POST['comment'];
                             $id = $_GET['id'];
@@ -107,7 +120,15 @@ require "./includes/connect.php";
                         if ($re->num_rows ? $re->num_rows > 0 : false) {
                             while ($row = $re->fetch_assoc()) {
                                 $username = $row['user_name'];
+                                $cmt_id = $row["comment_id"];
                                 $poster = $con->query("SELECT * FROM users WHERE user_name = '$username'")->fetch_assoc();
+
+                                $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE cmt_id = '$cmt_id' AND is_post = false")->fetch_assoc();
+                                $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
+                                $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE cmt_id = '$cmt_id' AND user_name = '$my_id'")->fetch_assoc();
+                                $is_liked = '';
+                                if ($liked["liked"] > 0)
+                                    $is_liked = "fas-liked";
                                 echo "<div class='content'>
                                     <div>
                                         <div class=' c-header'>
@@ -127,8 +148,9 @@ require "./includes/connect.php";
                                     </div>
                                     <hr class='m-0'>
                                     <div class='interactive p-1 m-0'>
-                                        <button class='like p-1'><i class='fas fa-heart'></i>
-                                            <span class='count-like'></span>
+                                        <button class='like p-1' onclick=\"like(" . $cmt_id . ",false,'" . $my_id . "');\">
+                                            <i class='fas fa-heart " . $is_liked . "' id='cl" . $cmt_id . "'></i>
+                                            <span class='count-like' id='c" . $cmt_id . "'>" . $total_like . "</span>
                                         </button>
                                     </div>
                                 </div>";

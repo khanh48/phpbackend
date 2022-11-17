@@ -1,5 +1,4 @@
 <?php
-session_start();
 require "./includes/connect.php";
 if (isset($_SESSION['userID'])) {
     $user_id = $_SESSION['userID'];
@@ -427,7 +426,14 @@ if (isset($_SESSION['userID'])) {
                                             if (isset($_POST['check'])) {
                                                 $carr = $_POST['check'];
                                                 foreach ($carr as $post) {
+                                                    $allCmt = $con->query("SELECT * FROM comments WHERE comments.post_id = '$post'");
+                                                    if ($allCmt->num_rows > 0) {
+                                                        while ($row = $allCmt->fetch_assoc()) {
+                                                            $con->query("DELETE FROM likes WHERE cmt_id = '" . $row['comment_id'] . "'");
+                                                        }
+                                                    }
                                                     $con->query("DELETE FROM comments WHERE comments.post_id = '$post'");
+                                                    $con->query("DELETE FROM likes WHERE post_id = '" . $post . "'");
                                                     $sql = $con->query("DELETE FROM posts WHERE post_id = '$post'");
                                                     if ($sql) {
                                                         echo "<meta http-equiv='refresh' content='0'>";
