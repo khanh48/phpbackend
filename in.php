@@ -12,25 +12,32 @@
 
 <body>
     <div id="show"></div>
-    <input type="text" name="msg" id="msg">
+    <form id="f" method="post">
+        <input type="text" name="msg" id="msg">
+        <input type="submit" value="Enter">
+    </form>
     <script type="text/javascript">
     $(document).ready(function() {
-        $('#msg').keyup(function(e) {
+        $('#f').submit(function(e) {
+            console.log(e)
+            e.preventDefault();
             // console.log($('#msg').val());
-            $('#show').load('test.php')
+            // $('#show').load('test.php')
 
             // $.post("test.php", { msg: $('#msg').val() }, function (data, status, xhr) {
             //     $('#show').html(data)
             // })
 
-            // $.ajax({
-            //     type: 'POST',
-            //     url: 'test.php',
-            //     data: { msg: $('#msg').val() },
-            //     success: function (data, status, xhr) {
-            //         $('#show').html(data)
-            //     }
-            // })
+            $.ajax({
+                type: 'POST',
+                url: 'test.php',
+                data: {
+                    msg: $('#msg').val()
+                },
+                success: function(data) {
+                    $('#show').html(data)
+                }
+            })
         })
     })
     </script>

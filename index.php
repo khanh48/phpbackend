@@ -17,13 +17,6 @@ require "./includes/connect.php";
     <script src="./lib/js/main.js"></script>
     <script src="./lib/js/ajax.js"></script>
     <!--Xoá phần input file default-->
-    <script>
-    (function(e, t, n) {
-        var r = e.querySelector(".no-js");
-        r.className = r.className.replace(/(^|\s)no-js(\s|$)/, "$1js$2")
-    })
-    (document, window, 0);
-    </script>
 </head>
 
 <body>
