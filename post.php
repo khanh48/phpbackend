@@ -1,5 +1,10 @@
 <?php
 require "./includes/connect.php";
+
+if (isset($_GET["r"])) {
+    $read = $_GET["r"];
+    $con->query("UPDATE notify SET readed = true WHERE notify_id = $read");
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi-VN">
@@ -15,6 +20,7 @@ require "./includes/connect.php";
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/main.js"></script>
+    <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/ajax.js"></script>
 </head>
 
@@ -65,7 +71,7 @@ require "./includes/connect.php";
                 <div class='m-0' style='text-align: end;'><span class='read-more'></span></div>
                 <hr class='m-0'>
                 <div class='interactive p-1 m-0'>
-                    <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "');\">
+                    <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "','" . $poster["user_name"] . "');\">
                         <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "''></i>
                         <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
                     </button>
@@ -89,12 +95,20 @@ require "./includes/connect.php";
 
                 <?php
                         if (isset($_POST['send'])) {
+                            $milliseconds = intval(microtime(true) * 1000);
                             $comment = $_POST['comment'];
                             $id = $_GET['id'];
-                            $username = $_SESSION['userID'];
-                            $sql = "INSERT INTO comments(content, user_name, post_id) VALUES('$comment', '$username', '$id')";
+                            $sql = "INSERT INTO comments(content, user_name, post_id) VALUES('$comment', '$my_id', '$id')";
                             if ($con->query($sql)) {
-                                echo "<meta http-equiv='refresh' content='0'>";
+                                if ($my_id !== $poster['user_name']) {
+                                    $getUser = $con->query("SELECT * FROM users WHERE user_name = '$my_id'")->fetch_assoc();
+                                    $fullName = isset($getUser["hoten"]) ? $getUser["hoten"] : "";
+                                    $msg = $fullName . " đã bình luận trong bài viết của bạn.";
+                                    $con->query("INSERT INTO notify(notify_id, from_user, msg, to_user, url) VALUES($milliseconds,'$my_id', '$msg', '" . $poster['user_name'] . "', './post.php?id=$id')");
+
+                                    echo "<script>sendcm('$my_id','" . $poster['user_name'] . "', $milliseconds, '" . $msg . "', $id)</script>";
+                                }
+                                // echo "<meta http-equiv='refresh' content='0'>";
                             }
                         }
                         $result = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$pid'");
@@ -129,7 +143,7 @@ require "./includes/connect.php";
                                 $is_liked = '';
                                 if ($liked["liked"] > 0)
                                     $is_liked = "fas-liked";
-                                echo "<div class='content'>
+                                echo "<div class='content' id='cm" . $cmt_id . "'>
                                     <div>
                                         <div class=' c-header'>
                                             <span>
@@ -148,7 +162,7 @@ require "./includes/connect.php";
                                     </div>
                                     <hr class='m-0'>
                                     <div class='interactive p-1 m-0'>
-                                        <button class='like p-1' onclick=\"like(" . $cmt_id . ",false,'" . $my_id . "');\">
+                                        <button class='like p-1' onclick=\"like(" . $cmt_id . ",false,'" . $my_id . "', '" . $poster["user_name"] . "');\">
                                             <i class='fas fa-heart " . $is_liked . "' id='cl" . $cmt_id . "'></i>
                                             <span class='count-like' id='c" . $cmt_id . "'>" . $total_like . "</span>
                                         </button>

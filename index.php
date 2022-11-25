@@ -15,8 +15,12 @@ require "./includes/connect.php";
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/main.js"></script>
+    <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/ajax.js"></script>
     <!--Xoá phần input file default-->
+    <script>
+    sessionStorage.setItem("uid", <?php echo "'" . $my_id . "'"; ?>);
+    </script>
 </head>
 
 <body>
@@ -128,7 +132,7 @@ require "./includes/connect.php";
                         <div class='m-0' style='text-align: end;'><span class='read-more'></span></div>
                         <hr class='m-0'>
                         <div class='interactive p-1 m-0'>
-                            <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "');\">
+                            <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "', '" . $poster['user_name'] . "');\">
                                 <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "'></i>
                                 <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
                             </button>

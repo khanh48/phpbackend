@@ -295,7 +295,7 @@ body::-webkit-scrollbar-thumb:hover {
 
 .info {
     height: 200px;
-    background-color: rgb(149, 200, 218);
+    background-color: #95c8da;
     border-radius: 15px;
     margin-top: 5px;
     overflow: hidden;
@@ -313,7 +313,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .info-top:hover {
-    background-color: rgb(134, 187, 206);
+    background-color: #86bbce;
 }
 
 div.notify {
@@ -341,8 +341,8 @@ div.notify {
     cursor: default;
 }
 
-.thongbao:hover {
-    background-color: rgb(134, 187, 206);
+.notify-content:hover {
+    background-color: #86bbce;
 }
 
 div.notify::-webkit-scrollbar {
@@ -502,6 +502,22 @@ div.notify::-webkit-scrollbar-thumb:hover {
     max-width: 100%;
 }
 
+.notify-content a:hover {
+    text-decoration: underline black;
+}
+
+.notify-content {
+    color: #000;
+}
+
+.notify-content:hover {
+    cursor: pointer;
+}
+
+.unread {
+    font-weight: 700;
+}
+
 .name,
 .time {
     cursor: pointer;
@@ -653,7 +669,8 @@ div.notify::-webkit-scrollbar-thumb:hover {
     background-color: rgb(134, 187, 206);
 }
 
-.page-item a:hover {
+.page-item a:hover,
+a {
     text-decoration: none;
 }
 
@@ -680,10 +697,28 @@ div.notify::-webkit-scrollbar-thumb:hover {
     animation: run 20s linear infinite
 }
 
+.newNotify {
+    animation: newNotify 1.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .animated {
         -webkit-animation: none;
         animation: none
+    }
+}
+
+@keyframes newNotify {
+    0% {
+        background-color: #add8e6;
+    }
+
+    50% {
+        background-color: #95c8da;
+    }
+
+    100% {
+        background-color: #add8e6;
     }
 }
 

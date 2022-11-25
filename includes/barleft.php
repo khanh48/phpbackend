@@ -4,8 +4,16 @@
         <div class="thongbao">
             <div class="tb">Thông báo</div>
             <div class="notify">
-                <div class="notify-content">...
-                </div>
+                <?php
+                $getNotify = $con->query("SELECT * FROM notify WHERE to_user = '$my_id' ORDER BY notify_id DESC");
+                if ($getNotify->num_rows > 0) {
+                    while ($notify = $getNotify->fetch_assoc()) {
+                        echo "<a href='" . $notify["url"] . "&r=" . $notify["notify_id"] . "'><div class='notify-content " . ($notify["readed"] ? "" : "unread") . "'>
+                        " . $notify["msg"] . "
+                        </div></a>";
+                    }
+                }
+                ?>
             </div>
         </div>
     </div>
