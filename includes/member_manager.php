@@ -40,24 +40,23 @@
                                 $ad = $row['chucvu'] == 'Admin' ? 'selected' : '';
                                 $tv = $row['chucvu'] == 'Thành viên' ? 'selected' : '';
                                 echo "<tr>
-                                                <td><input type='checkbox' name='checkbox[]' value='" . $row['user_name'] . "'></td>
-                                                <td>" . $row['user_name'] . "</td>
-                                                <td><input class='form-control f-sm' type='text' name='hoten[]' value='" . $row['hoten'] . "' /></td>
-                                                <td><input class='form-control f-sm' type='date' name='ngaysinh[]' value='" . $row['ngaysinh'] . "' /></td>
-                                                <td><select class='form-control f-sm mb-1' name='gioitinh[]'>
-                                                <option value=''>Khác</option>
-                                                <option value='Nam' " . $nam . ">Nam</option>
-                                                <option value='Nữ' " . $nu . ">Nữ</option>
-                                                </select></td>
-                                                <td><textarea class='form-control f-sm' name='sothich[]'/>" . $row['sothich'] . "</textarea></td>
-                                                <td><input type='text' class='form-control f-sm mb-1' name='sdt[]' value='" . $row['sodienthoai'] . "' /></td>
-                                                
-                                                <td><select class='form-control f-sm mb-1' name='chucvu[]'>
-                                                <option value='Thành viên' " . $tv . ">Thành viên</option>
-                                                <option value='Admin' " . $ad . ">Admin</option>
-                                                </select></td>
-                                            </tr>
-                                        ";
+                                        <td><input type='checkbox' name='checkbox[]' value='" . $row['user_name'] . "'></td>
+                                        <td>" . $row['user_name'] . "</td>
+                                        <td><input class='form-control f-sm' type='text' name='hoten[]' value='" . $row['hoten'] . "' /></td>
+                                        <td><input class='form-control f-sm' type='date' name='ngaysinh[]' value='" . $row['ngaysinh'] . "' /></td>
+                                        <td><select class='form-control f-sm mb-1' name='gioitinh[]'>
+                                        <option value=''>Khác</option>
+                                        <option value='Nam' " . $nam . ">Nam</option>
+                                        <option value='Nữ' " . $nu . ">Nữ</option>
+                                        </select></td>
+                                        <td><textarea class='form-control f-sm' name='sothich[]'/>" . $row['sothich'] . "</textarea></td>
+                                        <td><input type='text' class='form-control f-sm mb-1' name='sdt[]' value='" . $row['sodienthoai'] . "' /></td>
+                                        
+                                        <td><select class='form-control f-sm mb-1' name='chucvu[]'>
+                                        <option value='Thành viên' " . $tv . ">Thành viên</option>
+                                        <option value='Admin' " . $ad . ">Admin</option>
+                                        </select></td>
+                                    </tr>";
                             }
                         }
                         if (isset($_POST['del']) && isset($_SESSION['userID'])) {

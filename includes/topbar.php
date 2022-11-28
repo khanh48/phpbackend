@@ -24,8 +24,8 @@
         <?php
 
         if (!isset($_SESSION['userID'])) {
-            echo "<ul><li class='effect gr-i-m ef open-login' id='login'>Đăng nhập</li>";
-            echo "<li class='effect gr-i-m ef open-reg' id='reg'>Đăng ký</li>
+            echo "<ul><li class='effect gr-i-m ef open-login' id='login' data-bs-toggle='modal' data-bs-target='#modal-login'>Đăng nhập</li>";
+            echo "<li class='effect gr-i-m ef open-reg' id='reg' data-bs-toggle='modal' data-bs-target='#modal-reg'>Đăng ký</li>
                         </ul>";
         }
         ?>
@@ -43,9 +43,9 @@
         <ul><?php
             if (!isset($_SESSION['userID'])) {
                 echo "<li class='log'>
-                        <a class='open-login'>Đăng nhập</a></li>
+                        <a class='open-login' data-bs-toggle='modal' data-bs-target='#modal-login'>Đăng nhập</a></li>
                         <li class='log'>
-                        <a class='open-reg'>Đăng ký</a></li>";
+                        <a class='open-reg data-bs-toggle='modal' data-bs-target='#modal-reg'>Đăng ký</a></li>";
             }
             ?>
             <li>

@@ -37,17 +37,17 @@
                                 $trung = $row['nhom'] == 'Trung' ? 'selected' : '';
                                 $nam = $row['nhom'] == 'Nam' ? 'selected' : '';
                                 echo "<tr>
-                                                <td><input type='checkbox' name='check[]' value='" . $row['post_id'] . "'></td>
-                                                <td>" . $row['post_id'] . "</td>
-                                                <td><input class='form-control f-sm' type='text' name='title[]' value='" . $row['title'] . "' /></td>
-                                                <td><textarea class='form-control f-sm' name='content[]'/>" . $row['content'] . "</textarea></td>
-                                                <td>" . $row['user_name'] . "</td>
-                                                <td><select class='form-control f-sm mb-1' name='group[]'>
-                                                <option value='Bắc' " . $bac . ">Bắc</option>
-                                                <option value='Trung' " . $trung . ">Trung</option>
-                                                <option value='Nam' " . $nam . ">Nam</option>
-                                                </select></td>
-                                            </tr>";
+                                        <td><input type='checkbox' name='check[]' value='" . $row['post_id'] . "'></td>
+                                        <td>" . $row['post_id'] . "</td>
+                                        <td><input class='form-control f-sm' type='text' name='title[]' value='" . $row['title'] . "' /></td>
+                                        <td><textarea class='form-control f-sm' name='content[]'/>" . $row['content'] . "</textarea></td>
+                                        <td>" . $row['user_name'] . "</td>
+                                        <td><select class='form-control f-sm mb-1' name='group[]'>
+                                        <option value='Bắc' " . $bac . ">Bắc</option>
+                                        <option value='Trung' " . $trung . ">Trung</option>
+                                        <option value='Nam' " . $nam . ">Nam</option>
+                                        </select></td>
+                                    </tr>";
                             }
                         }
                         if (isset($_POST['del-post']) && isset($_SESSION['userID'])) {

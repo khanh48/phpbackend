@@ -14,6 +14,7 @@ require "./includes/connect.php";
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
+    <script src="./lib/js/bootstrap.min.js"></script>
     <script src="./lib/js/main.js"></script>
     <script src="./lib/js/ajax.js"></script>
 </head>
@@ -30,7 +31,7 @@ require "./includes/connect.php";
                         <input type="text" class="form-control f-sm mb-1" placeholder="Tìm kiếm" name="search-content">
                     </div>
                     <div class="group-file">
-                        <select class="custom-select custom-select-sm" name="type">
+                        <select class="form-select form-select-sm" name="type">
                             <option selected disabled value="" required>Tìm kiếm theo..</option>
                             <option value="0">Họ tên</option>
                             <option value="1">Tiêu đề bài viết</option>

@@ -9,6 +9,7 @@ create table if not exists users(
     sothich text,
     sodienthoai char(12),chucvu nvarchar(50) DEFAULT "Thành Viên",
     avatar varchar(250) DEFAULT "./lib/images/default_avatar.png",
+    date timestamp default current_timestamp(),
 	constraint pk_users primary key(user_name)
 );
 
@@ -18,6 +19,7 @@ create table if not exists posts(
     content text not null,
     user_name char(13) not null,
     nhom nvarchar(50) not null,
+    date timestamp default current_timestamp(),
     constraint pk_posts primary key(post_id),
     constraint fk_posts foreign key(user_name) references users(user_name)
 );
@@ -27,6 +29,7 @@ create table if not exists comments(
     content text not null,
     user_name char(13) not null,
     post_id int not null,
+    date timestamp default current_timestamp(),
 	constraint pk_comments primary key(comment_id),
     constraint fk_comments_user foreign key(user_name) references users(user_name),
     constraint fk_comments_post foreign key(post_id) references posts(post_id)
@@ -67,6 +70,7 @@ DELIMITER ;
 set global event_scheduler = on;
 
 insert into users(user_name, pass, hoten, chucvu) values('admin', 'abc', 'ADMIN', 'Admin');
+alter table users add column date timestamp default current_timestamp() after avatar
 
 -- alter table posts add constraint fk_posts foreign key(user_name) references users(user_name);
 -- alter table comments add constraint fk_comments_user foreign key(user_name) references users(user_name);

@@ -14,6 +14,7 @@ require "./includes/connect.php";
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
+    <script src="./lib/js/bootstrap.min.js"></script>
     <script src="./lib/js/main.js"></script>
     <script src="./lib/js/ajax.js"></script>
 </head>
@@ -34,19 +35,19 @@ require "./includes/connect.php";
                 if ($re->num_rows > 0) {
                     $row = $re->fetch_assoc();
                     echo "<div class='content'>
-                    <div class='mt-0 ml-2'>
+                    <div class='mt-0 ms-2'>
                     <div class=' c-header'>
                         <img class='avt-profile' src='./lib/images/default_avatar.png'>
                         <div>
                         <div class='name'>" . $row['hoten'] . "</div>";
                     if ($re_post->num_rows > 0) {
                         $r = $re_post->fetch_assoc();
-                        echo "<p class='pl-2 mb-0'>Bài viết: " . $r['total_post'] . "</p>";
+                        echo "<p class='ps-2 mb-0'>Bài viết: " . $r['total_post'] . "</p>";
                     }
-                    echo "<p class='pl-2 mb-0'>Giới tính: " . $row['gioitinh'] . "</p>";
-                    echo "<p class='pl-2 mb-0'>Ngày sinh: " . $row['ngaysinh'] . "</p>";
-                    echo "<p class='pl-2 mb-0'>Số điện thoại: " . $row['sodienthoai'] . "</p>";
-                    echo "<p class='pl-2 mb-0'>Sở thích: " . $row['sothich'] . "</p>";
+                    echo "<p class='ps-2 mb-0'>Giới tính: " . $row['gioitinh'] . "</p>";
+                    echo "<p class='ps-2 mb-0'>Ngày sinh: " . $row['ngaysinh'] . "</p>";
+                    echo "<p class='ps-2 mb-0'>Số điện thoại: " . $row['sodienthoai'] . "</p>";
+                    echo "<p class='ps-2 mb-0'>Sở thích: " . $row['sothich'] . "</p>";
 
                     echo "</div></div>
                         </div></div>";

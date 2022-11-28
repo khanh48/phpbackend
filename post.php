@@ -19,6 +19,7 @@ if (isset($_GET["r"])) {
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
+    <script src="./lib/js/bootstrap.min.js"></script>
     <script src="./lib/js/main.js"></script>
     <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/ajax.js"></script>
@@ -55,7 +56,7 @@ if (isset($_GET["r"])) {
                             <img class='avt' src='" . $poster['avatar'] . "'></span>
                         <div class='c-name'><span>
                                 <div class='name'>" . $poster['hoten'] . "</div>
-                                <div class='time'><small class='text-secondary'>... phút trước</small></div>
+                                <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small></div>
                             </span></div>
                     </div>
                 </div>
@@ -130,7 +131,7 @@ if (isset($_GET["r"])) {
                         else
                             $start = 0;
 
-                        $re = $con->query("SELECT * FROM comments WHERE post_id = '$pid' ORDER BY comment_id DESC LIMIT $start, $limit");
+                        $re = $con->query("SELECT * FROM comments WHERE post_id = '$pid' ORDER BY date DESC LIMIT $start, $limit");
                         if ($re->num_rows ? $re->num_rows > 0 : false) {
                             while ($row = $re->fetch_assoc()) {
                                 $username = $row['user_name'];
@@ -150,7 +151,7 @@ if (isset($_GET["r"])) {
                                                 <img class='avt' src='" . $poster['avatar'] . "'></span>
                                             <div class='c-name'><span>
                                                     <div class='name'>" . $poster['hoten'] . "</div>
-                                                    <div class='time'><small class='text-secondary'>... phút trước</small></div>
+                                                    <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small></div>
                                                 </span></div>
                                         </div>
                                     </div>

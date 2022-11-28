@@ -14,6 +14,8 @@ require "./includes/connect.php";
         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
+    <script src="./lib/js/bootstrap.min.js"></script>
+    <script src="./lib/js/bootstrap.bundle.min.js"></script>
     <script src="./lib/js/main.js"></script>
     <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/ajax.js"></script>
@@ -38,7 +40,7 @@ require "./includes/connect.php";
                             <textarea class="form-control f-sm" placeholder="Nội dung" name="noidung"></textarea>
                         </div>
                         <div class="group-file">
-                            <select class="custom-select custom-select-sm" name="nhom">
+                            <select class="form-select form-select-sm" name="nhom">
                                 <option selected disabled value="">Groups</option>
                                 <option value="Bắc">Bắc</option>
                                 <option value="Trung">Trung</option>
@@ -95,7 +97,7 @@ require "./includes/connect.php";
                 else
                     $start = 0;
 
-                $re = $con->query("SELECT * FROM posts ORDER BY post_id DESC LIMIT $start, $limit");
+                $re = $con->query("SELECT * FROM posts ORDER BY date DESC LIMIT $start, $limit");
                 if ($re->num_rows > 0) {
                     while ($row = $re->fetch_assoc()) {
                         $username = $row['user_name'];
@@ -116,7 +118,7 @@ require "./includes/connect.php";
                                     <img class='avt' src='" . $poster['avatar'] . "'></span>
                                 <div class='c-name'><span>
                                         <div class='name'>" . $poster['hoten'] . "</div>
-                                        <div class='time'><small class='text-secondary'>... phút trước</small></div>
+                                        <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small></div>
                                     </span></div>
                             </div>
                         </div>
