@@ -45,20 +45,21 @@
                 echo "<li class='log'>
                         <a class='open-login' data-bs-toggle='modal' data-bs-target='#modal-login'>Đăng nhập</a></li>
                         <li class='log'>
-                        <a class='open-reg data-bs-toggle='modal' data-bs-target='#modal-reg'>Đăng ký</a></li>";
+                        <a class='open-reg' data-bs-toggle='modal' data-bs-target='#modal-reg'>Đăng ký</a></li>";
             }
             ?>
             <li>
                 <a href="./index.php">Trang chủ</a>
-            </li>
-            <li>
-                <a href="./profile.php">Hồ sơ cá nhân</a>
             </li>
             <?php
             if (isset($_SESSION['userID'])) {
                 $user_id = $_SESSION['userID'];
                 $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
                 $re = $con->query($sql)->fetch_assoc();
+                echo "<li>
+                    <a href='./profile.php'>Hồ sơ cá nhân</a>
+                </li>";
+
                 if ($re['chucvu'] === 'Admin') {
                     echo "<li>
                             <a href='./admin.php'>Quản lý</a></li>";

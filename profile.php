@@ -37,7 +37,7 @@ require "./includes/connect.php";
                     echo "<div class='content'>
                     <div class='mt-0 ms-2'>
                     <div class=' c-header'>
-                        <img class='avt-profile' src='./lib/images/default_avatar.png'>
+                        <img class='avt-profile rounded-circle' src='./lib/images/default_avatar.png'>
                         <div>
                         <div class='name'>" . $row['hoten'] . "</div>";
                     if ($re_post->num_rows > 0) {
@@ -86,7 +86,7 @@ require "./includes/connect.php";
                                 <td><textarea class='form-control f-sm' name='sothich' id='sothich' />" . $row['sothich'] . "</textarea></td>
                             </tr>
                         </table>
-                        <button class='f-sm btn btn-success' name='save'>Lưu</button>
+                        <button class='f-sm btn btn-success my-2' name='save'>Lưu</button>
                         </div></form></div>
                         </div>";
                 }
@@ -111,6 +111,19 @@ require "./includes/connect.php";
         </div>
 
     </div>
+    <div class="toast-container position-fixed bottom-0 start-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                <strong class="me-auto" id="headerToast"></strong>
+                <small id="toastTime"></small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+            </div>
+        </div>
+    </div>
+
     <footer id="ft">
         <div class="top animated"></div>
         <div class="bot">

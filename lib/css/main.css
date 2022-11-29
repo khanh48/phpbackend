@@ -328,8 +328,8 @@ div.notify {
     font-size: 13px;
 }
 
-.notify-content:hover {
-    cursor: default;
+.notify-content:hover,
+.notify-link:hover {
     text-decoration: underline black;
 }
 
@@ -506,11 +506,13 @@ div.notify::-webkit-scrollbar-thumb:hover {
     text-decoration: underline black;
 }
 
-.notify-content {
+.notify-content,
+.notify-link {
     color: #000;
 }
 
-.notify-content:hover {
+.notify-content:hover,
+.notify-link:hover {
     cursor: pointer;
 }
 
@@ -751,7 +753,6 @@ a {
     color: red;
 }
 
-
 .js .inputfile {
     width: 0.1px;
     height: 0.1px;
@@ -784,21 +785,6 @@ a {
     background-color: rgb(134, 187, 206);
 }
 
-
-.close {
-    text-align: end;
-    color: #aaaaaa;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.hiden {
+.hide {
     display: none;
 }

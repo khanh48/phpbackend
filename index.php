@@ -15,7 +15,6 @@ require "./includes/connect.php";
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/bootstrap.min.js"></script>
-    <script src="./lib/js/bootstrap.bundle.min.js"></script>
     <script src="./lib/js/main.js"></script>
     <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/ajax.js"></script>
@@ -50,7 +49,7 @@ require "./includes/connect.php";
                                 data-multiple-caption="{count} files selected" accept="image/*" multiple />
                             <label for="file-1"> <i class="fas fa-images"></i> <span>Choose
                                     images&hellip;</span></label>
-                            <button type="submit" name="post" class="btn btn-danger">Đăng</button>
+                            <button type="submit" name="post" class="btn btn-danger btn-sm">Đăng</button>
                         </div>
 
                         <?php
@@ -177,6 +176,19 @@ require "./includes/connect.php";
             </div>
 
         </div>
+        <div class="toast-container position-fixed bottom-0 start-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <!-- <img src="..." class="rounded me-2" alt="..."> -->
+                    <strong class="me-auto" id="headerToast"></strong>
+                    <small id="toastTime"></small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body" id="toastMessage">
+                </div>
+            </div>
+        </div>
+
         <footer id="ft">
             <div class="top animated"></div>
             <div class="bot">
