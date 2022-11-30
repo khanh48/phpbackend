@@ -747,6 +747,8 @@ a {
 .fas {
     margin-right: 5px;
     color: white;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .fas-liked {

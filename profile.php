@@ -16,7 +16,6 @@ require "./includes/connect.php";
     <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/bootstrap.min.js"></script>
     <script src="./lib/js/main.js"></script>
-    <script src="./lib/js/ajax.js"></script>
 </head>
 
 <body>
