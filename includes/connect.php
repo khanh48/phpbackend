@@ -9,7 +9,8 @@ $con = new mysqli($host, $user, $pass, $db);
 if ($con->connect_error) {
     die("Lỗi kết nối với cơ sở dữ liệu.");
 }
-$my_id = isset($_SESSION["userID"]) ? $_SESSION["userID"] : null;
+$logged = isset($_SESSION["userID"]);
+$my_id = $logged ? $_SESSION["userID"] : null;
 function getTime($datetime, $full = false)
 {
     $tz = new DateTimeZone("Asia/Ho_Chi_Minh");

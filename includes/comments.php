@@ -51,7 +51,7 @@ if ($re->num_rows ? $re->num_rows > 0 : false) {
         $is_liked = '';
         if ($liked["liked"] > 0)
             $is_liked = "fas-liked";
-        echo "<div class='content' id='cm" . $cmt_id . "'>
+        echo "<div class='content rm' id='cm" . $cmt_id . "'>
                 <div>
                     <div class=' c-header'>
                         <span>
@@ -65,7 +65,7 @@ if ($re->num_rows ? $re->num_rows > 0 : false) {
                 <div class='c-body'>
                 " . $row['content'] . "
                 </div>
-                <div class='m-0' style='text-align: end;'>
+                <div class='m-0 hide wh' style='text-align: end;'>
                     <span class='read-more'></span>
                 </div>
                 <hr class='m-0'>
@@ -77,7 +77,7 @@ if ($re->num_rows ? $re->num_rows > 0 : false) {
                 </div>
             </div>";
     }
-
+    echo "<script>loadReadMore()</script>";
     if ($total_records > 10) {
         echo "<div class='content'>
                 <div class='page'>

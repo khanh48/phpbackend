@@ -49,7 +49,7 @@ if (isset($_GET["r"])) {
                         $row = $result->fetch_assoc();
                         $username = $row['user_name'];
                         $poster = $con->query("SELECT * FROM users WHERE user_name = '$username'")->fetch_assoc();
-                        echo "<div class='content'>
+                        echo "<div class='content rm'>
                                 <div class='mt-0'>
                                     <div class=' c-header'>
                                         <span>
@@ -69,37 +69,63 @@ if (isset($_GET["r"])) {
                                 <div class='c-body'>
                                 " . $row['content'] . "
                                 </div>
-                                <div class='m-0' style='text-align: end;'><span class='read-more'></span></div>
-                                <hr class='m-0'>
-                                <div class='interactive p-1 m-0'>
-                                    <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "','" . $poster["user_name"] . "');\">
-                                        <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "''></i>
-                                        <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
+                                <div class='m-0 hide wh' style='text-align: end;'><span class='read-more'></span></div>";
+                        $images = $con->query("SELECT * FROM images WHERE `type` = 'post' AND post_id = " . $row['post_id']);
+
+                        if ($images->num_rows > 0) {
+                            echo "<div id='forpost" . $row['post_id'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
+                                        <div class='carousel-inner '>";
+                            $i = 0;
+                            while ($img = $images->fetch_assoc()) {
+                                $active = $i == 0 ? "active" : "";
+                                $i++;
+                                echo "<div class='carousel-item $active'>
+                                                    <img src='" . $img['url'] . "' class='d-block w-100 postImg' alt='...'>
+                                                  </div>";
+                            }
+                            echo "</div>
+                                    <button class='carousel-control-prev' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='prev'>
+                                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                        <span class='visually-hidden'>Previous</span>
                                     </button>
-                                    <button class='share p-1'><i class='fas fa-share'></i><span class='count-share'></span>
+                                    <button class='carousel-control-next' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='next'>
+                                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                        <span class='visually-hidden'>Next</span>
                                     </button>
-                                </div>
-                            </div>";
+                                    </div> ";
+                        }
+
+                        echo "<hr class='m-0'>
+                            <div class='interactive p-1 m-0'>
+                                <button class='like p-1' onclick=\"like(" . $row['post_id'] . ",true,'" . $my_id . "','" . $poster["user_name"] . "');\">
+                                    <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "''></i>
+                                    <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
+                                </button>
+                                <button class='share p-1'><i class='fas fa-share'></i><span class='count-share'></span>
+                                </button>
+                            </div>
+                        </div>";
                     } else {
                         echo "<div class='content'>
                                 <div class='mt-0' style='text-align:center'>Không có bài viết nào.</div>
                         </div>";
                     }
-                } ?>
-
-                <div class='content'>
+                }
+                if ($logged)
+                    echo "<div class='content'>
                     <div>
-                        <form method='post' id="sendCmt">
+                        <form method='post' id='sendCmt'>
                             <div class='form-group p-1'>
-                                <textarea class='form-control f-sm' id="cmtContent" placeholder='Bình luận'
+                                <textarea class='form-control f-sm' id='cmtContent' placeholder='Bình luận'
                                     name='comment' required></textarea>
                             </div>
                             <button type='submit' name='send' class='btn btn-danger mb-2'>Enter</button>
                         </form>
                     </div>
-                </div>
+                </div>";
+                ?>
 
-                <div id="cmt"></div>
+                <div id='cmt'></div>
             </div>
 
         </div>
@@ -123,8 +149,6 @@ if (isset($_GET["r"])) {
 
             </div>
         </footer>
-
-
     </div>
 </body>
 

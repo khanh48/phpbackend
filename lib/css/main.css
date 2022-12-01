@@ -497,6 +497,12 @@ div.notify::-webkit-scrollbar-thumb:hover {
     justify-content: center;
 }
 
+.postImg {
+    height: calc((100vh + 100vw) * 0.25);
+    width: auto;
+    object-fit: contain;
+}
+
 .image>img {
     max-height: 500px;
     max-width: 100%;
