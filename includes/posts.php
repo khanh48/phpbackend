@@ -44,9 +44,11 @@ if ($re->num_rows > 0) {
         echo "<div class='content rm'>
                 <div class='$loggedin'>
                     <div class=' c-header'>
-                        <span><img class='avt' src='" . $poster['avatar'] . "'></span>
+                        <span>
+                        <a class='name' href='./profile?user=".$poster['user_name']."'>
+                        <img class='avt' src='" . $poster['avatar'] . "'></span></a>
                         <div class='c-name'>
-                            <span><div class='name'>" . $poster['hoten'] . "</div>
+                            <span><a class='name' href='./profile?user=".$poster["user_name"]."'>" . $poster['hoten'] . "</a>
                                 <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small>
                                 </div>
                             </span>

@@ -12,5 +12,6 @@
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
     <script src="./lib/js/bootstrap.min.js"></script>
+    <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/main.js"></script>
 </head>

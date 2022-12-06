@@ -57,7 +57,7 @@
                 $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
                 $re = $con->query($sql)->fetch_assoc();
                 echo "<li>
-                    <a href='./profile.php'>Hồ sơ cá nhân</a>
+                    <a href='./profile?user=$my_id'>Hồ sơ cá nhân</a>
                 </li>";
 
                 if ($re['chucvu'] === 'Admin') {

@@ -3,7 +3,9 @@ require "./includes/connect.php";
 require_once("./includes/header.php");
 ?>
 
-<body>
+<body><script>
+    sessionStorage.setItem("uid", <?php echo "'" . $my_id . "'"; ?>);
+    </script>
     <div class="body">
         <?php include('./includes/topbar.php') ?>
 
@@ -80,6 +82,7 @@ require_once("./includes/header.php");
         </footer>
 
 
+        <script src="./lib/js/ajax.js"></script>
         <script src="./lib/js/filecustom.js"></script>
     </div>
 </body>

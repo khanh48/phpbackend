@@ -1,6 +1,6 @@
 <div class="left">
     <div class="info">
-        <div class="info-top"><a href="./profile.php">Hồ sơ cá nhân</a></div>
+        <div class="info-top"><a href="./profile.php?user=<?php echo $my_id ?>">Hồ sơ cá nhân</a></div>
         <div class="thongbao">
             <div class="tb">Thông báo</div>
             <div class="notify">

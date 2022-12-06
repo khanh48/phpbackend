@@ -36,9 +36,10 @@ require_once("./includes/header.php");
                                 <div class='mt-0'>
                                     <div class=' c-header'>
                                         <span>
-                                            <img class='avt' src='" . $poster['avatar'] . "'></span>
+                                        <a class='name' href='./profile?user=".$poster['user_name']."'>
+                                        <img class='avt' src='" . $poster['avatar'] . "'></span></a>
                                         <div class='c-name'><span>
-                                                <div class='name'>" . $poster['hoten'] . "</div>
+                                                <a class='name' href='./profile?user=".$poster['user_name']."'>" . $poster['hoten'] . "</a>
                                                 <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small></div>
                                             </span></div>
                                     </div>

@@ -71,17 +71,18 @@ create table if not exists images(
     constraint fk_images_owner foreign key(`owner`) references users(user_name)
 );
 
-DELIMITER //
-create event delete_event
-on schedule at current_timestamp + interval 1 day
-on completion preserve
-do begin 
-	delete from forum.notify where `date` < date_sub(now(), interval 7 day) and readed = true;
-end//
-DELIMITER ;
-set global event_scheduler = on;
+-- DELIMITER //
+-- create event delete_event
+-- on schedule at current_timestamp + interval 1 day
+-- on completion preserve
+-- do begin 
+-- 	delete from forum.notify where `date` < date_sub(now(), interval 7 day) and readed = true;
+-- end//
+-- DELIMITER ;
+-- set global event_scheduler = on;
 
 insert into users(user_name, pass, hoten, chucvu) values('admin', 'abc', 'ADMIN', 'Admin');
+insert into users(user_name, pass, hoten) values('user', 'abc', 'User');
 -- alter table users add column date timestamp default current_timestamp() after avatar
 
 -- alter table posts add constraint fk_posts foreign key(user_name) references users(user_name);
