@@ -82,7 +82,7 @@ DELIMITER ;
 set global event_scheduler = on;
 
 insert into users(user_name, pass, hoten, chucvu) values('admin', 'abc', 'ADMIN', 'Admin');
-alter table users add column date timestamp default current_timestamp() after avatar
+-- alter table users add column date timestamp default current_timestamp() after avatar
 
 -- alter table posts add constraint fk_posts foreign key(user_name) references users(user_name);
 -- alter table comments add constraint fk_comments_user foreign key(user_name) references users(user_name);

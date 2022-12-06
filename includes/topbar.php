@@ -61,8 +61,7 @@
                 </li>";
 
                 if ($re['chucvu'] === 'Admin') {
-                    echo "<li>
-                            <a href='./admin.php'>Quản lý</a></li>";
+                    echo "<li><a href='./admin.php'>Quản lý</a></li>";
                 }
             }
             ?>
