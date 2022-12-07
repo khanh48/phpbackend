@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Not found</title>
-</head>
+<?php
+http_response_code(404);
+include("./includes/header.php")
+?>
 
 <body>
-    <h1>404 Not Found</h1>
+    <class class="body">
+        <?php include("./includes/topbar.php") ?>
+        <div class="main d-block">
+            <div class="content">
+                <h1 class="text-center">404 This Page Not Found</h1>
+            </div>
+        </div>
+    </class>
+
+    <footer id="ft">
+        <div class="top animated"></div>
+        <div class="bot">
+            <div>Run For Your Life</div>
+
+        </div>
+    </footer>
 </body>
 
 </html>

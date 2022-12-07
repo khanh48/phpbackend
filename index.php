@@ -3,9 +3,7 @@ require "./includes/connect.php";
 require_once("./includes/header.php");
 ?>
 
-<body><script>
-    sessionStorage.setItem("uid", <?php echo "'" . $my_id . "'"; ?>);
-    </script>
+<body>
     <div class="body">
         <?php include('./includes/topbar.php') ?>
 

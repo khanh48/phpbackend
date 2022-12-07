@@ -6,8 +6,6 @@ if (isset($_POST['fullName']) && isset($_POST['userName']) && isset($_POST['pwd'
     $password = $_POST['pwd'];
     $rePassword = $_POST['repwd'];
     $lenName = strlen($fullName);
-    $lenUser = strlen($userName);
-    $lenPass = strlen($password);
     $patternUser = "/^(?=.*[A-Za-z])[A-Za-z\d]{6,13}$/";
     $patternPass = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$/";
 

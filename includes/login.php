@@ -8,7 +8,7 @@ if (isset($_POST['username']) && isset($_POST['pass'])) {
 
     if (isset($row['user_name']) && $row['user_name'] === $uname && $row['pass'] === $pwd) {
         $_SESSION['userID'] = $uname;
-        echo json_encode(array("message" => "success"));
+        echo json_encode(array("message" => "success", "username" => $uname));
     } else {
         echo json_encode(array("message" => "failed"));
     }

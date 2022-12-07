@@ -1,4 +1,4 @@
-ErrorDocument 404 /demo/in.php
+ErrorDocument 404 /demo/404.php
 
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f

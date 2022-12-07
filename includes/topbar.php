@@ -17,7 +17,7 @@
     <nav id="menu">
         <div>
             <marquee behavior="scroll" direction="left">
-                Cuộc Đời Là Những Chuyến Đi
+                <!-- Cuộc Đời Là Những Chuyến Đi -->
             </marquee>
         </div>
 
