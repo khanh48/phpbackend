@@ -1,8 +1,12 @@
 <div class="left">
     <div class="info">
-        <div class="info-top"><a href="./profile.php?user=<?php echo $my_id ?>">Hồ sơ cá nhân</a></div>
+        <a href="./profile.php?user=<?php echo $my_id ?>">
+            <div class="info-top">Hồ sơ cá nhân</div>
+        </a>
         <div class="thongbao">
-            <div class="tb">Thông báo</div>
+            <a href="./notification">
+                <div class="tb">Thông báo</div>
+            </a>
             <div class="notify">
                 <?php
                 $getNotify = $con->query("SELECT * FROM notify WHERE to_user = '$my_id' ORDER BY date DESC");

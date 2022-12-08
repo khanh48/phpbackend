@@ -41,14 +41,15 @@ if ($re->num_rows > 0) {
         $is_liked = '';
         if ($liked["liked"] > 0)
             $is_liked = "fas-liked";
+
         echo "<div class='content rm'>
                 <div class='$loggedin'>
                     <div class=' c-header'>
                         <span>
-                        <a class='name' href='./profile?user=".$poster['user_name']."'>
-                        <img class='avt' src='" . $poster['avatar'] . "'></span></a>
+                        <a class='name' href='./profile?user=" . $poster['user_name'] . "'>
+                        <img class='avt' src='" . $poster['avatar'] . "'></a></span>
                         <div class='c-name'>
-                            <span><a class='name' href='./profile?user=".$poster["user_name"]."'>" . $poster['hoten'] . "</a>
+                            <span><a class='name' href='./profile?user=" . $poster["user_name"] . "'>" . $poster['hoten'] . "</a>
                                 <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small>
                                 </div>
                             </span>
@@ -114,7 +115,7 @@ if ($re->num_rows > 0) {
                 <div>";
         if ($current_page > 1 && $total_page > 1) {
             echo "<span class='page-item'><a href='index.php?page=" . ($current_page - 1) . "'>
-                            << /a></span>";
+                            <</a></span>";
         }
 
         for ($i = 1; $i <= $total_page; $i++) {

@@ -303,13 +303,10 @@ body::-webkit-scrollbar-thumb:hover {
 
 .info-top {
     cursor: pointer;
+    color: #272b2c;
     text-align: center;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-}
-
-.info-top a {
-    color: #272b2c;
 }
 
 .info-top:hover {
@@ -334,11 +331,13 @@ div.notify {
 }
 
 .tb {
+    color: #000;
     text-align: center;
 }
 
 .tb:hover {
-    cursor: default;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .notify-content:hover {
@@ -797,4 +796,32 @@ a {
 
 .hide {
     display: none;
+}
+
+.invisible-button {
+    border: none;
+    color: #000;
+    background-color: inherit;
+}
+
+.invisible-button:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+
+.btn-close:focus {
+    box-shadow: none;
+}
+
+.notification {
+    color: #000;
+}
+
+.notification span {
+    font-size: 14px;
+}
+
+.notification:hover {
+    text-decoration: underline;
 }

@@ -2,7 +2,7 @@ create database if not exists forum;
 use forum;
 create table if not exists users(
     user_name char(13) not null,
-    pass char(15) not null,
+    pass char(50) not null,
     hoten nvarchar(50) not null,
     ngaysinh date,
     gioitinh varchar(10),
