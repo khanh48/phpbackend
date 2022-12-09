@@ -1,5 +1,5 @@
 <div class='modal fade' id="modal-reg">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class='modal-content'>
             <header class='b-4 modal-header'>
                 <h1 class="mx-auto modal-title">Đăng ký</h1>
@@ -48,7 +48,7 @@
 </div>
 
 <div class='modal fade' id="modal-login">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class='modal-content'>
             <header class='mb-4 modal-header'>
                 <h1 class="modal-title mx-auto">Đăng nhập</h1>

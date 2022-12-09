@@ -43,7 +43,7 @@ if ($re->num_rows > 0) {
             $is_liked = "fas-liked";
 
         echo "<div class='content rm'>
-                <div class='$loggedin'>
+                <div class='d-flex justify-content-between $loggedin'>
                     <div class=' c-header'>
                         <span>
                         <a class='name' href='./profile?user=" . $poster['user_name'] . "'>
@@ -54,8 +54,12 @@ if ($re->num_rows > 0) {
                                 </div>
                             </span>
                         </div>
-                    </div>
-                </div>
+                    </div>";
+        if ($myRank === "Admin" || $my_id === $poster['user_name']) {
+            echo "<button name='delete-notification' class='btn-close py-1 px-3'
+            value='a' data-bs-toggle='modal' data-bs-target='#delete-post' onclick=\"deletePost($post)\"></button>";
+        }
+        echo "</div>
                 <div>
                     <div class='title'>
                         <div class='name'>" . $row['nhom'] . "</div><span>></span>

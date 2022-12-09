@@ -1,6 +1,11 @@
 <?php
 require "./includes/connect.php";
 require_once("./includes/header.php");
+include_once('./object/posts.php');
+$postOj = new Post($con);
+if (isset($_POST['delete-post']) && $logged) {
+    $postOj->deletePost($_POST['delete-post']);
+}
 ?>
 
 <body>
@@ -58,6 +63,28 @@ require_once("./includes/header.php");
             </div>
 
         </div>
+
+        <div class="modal modal-alert py-5" tabindex="-1" role="dialog" id="delete-post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content rounded-3 shadow">
+                    <div class="modal-body p-4 text-center">
+                        <h5 class="mb-0">Xóa bài viết?</h5>
+                        <p class="mb-0">Bài viết sẽ bị xóa vĩnh viễn.</p>
+                    </div>
+                    <form method="post">
+                        <div class="modal-footer flex-nowrap p-0">
+                            <button name="delete-post"
+                                class="btn btn-lg btn-link text-danger fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"
+                                id="confirm-yes"><strong>Xóa</strong></button>
+                            <button type="button"
+                                class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+                                data-bs-dismiss="modal">Hủy</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="toast-container position-fixed bottom-0 start-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">

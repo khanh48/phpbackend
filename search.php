@@ -77,13 +77,11 @@ require_once("./includes/header.php");
                     $re = $con->query($sql);
                     if ($re->num_rows > 0) {
                         while ($row = $re->fetch_assoc()) {
-                            $username = $row['user_name'];
-                            $poster = $con->query("SELECT * FROM users WHERE user_name = '$username'")->fetch_assoc();
                             echo "<div class='content'>
                                 <div class='pb-2'>
                                 <div class=' c-header'>
                                 <span>
-                                    <img class='avt' src='" . $poster['avatar'] . "'></span>
+                                    <img class='avt' src='" . $row['avatar'] . "'></span>
                                 <div class='c-name'><span>
                                         <div class='name'>" . $row['hoten'] . "</div>
                                         <div class='time'><small class='text-secondary'>Hoạt động ... phút trước</small></div>

@@ -1,20 +1,12 @@
 <?php
 require_once "./includes/connect.php";
-if (isset($_SESSION['userID'])) {
-    $user_id = $_SESSION['userID'];
-    $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
-    $re = $con->query($sql)->fetch_assoc();
-    if ($re['chucvu'] !== 'Admin') {
-        echo "<script>
-        window.stop()</script>";
-    }
-} else {
-    echo "<script>
-    window.stop()</script>";
-}
 require_once("./includes/header.php");
+include_once("./object/posts.php");
+$postObject = new Post($con);
+if ($myRank !== 'Admin') {
+    die("You do not have permission to access.");
+}
 ?>
-
 
 <body>
     <div class="body">
@@ -93,7 +85,8 @@ require_once("./includes/header.php");
                     }
                     if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                         unset($_SESSION['userID']);
-                        header('Location: ./index.php');
+                        echo "<script>sessionStorage.removeItem('uid');
+                        window.location.href = './';</script>";
                     }
                     ?>
                 </ul>
@@ -130,10 +123,9 @@ require_once("./includes/header.php");
                             <tbody>
                                 <div class="form-group">
                                     <?php
-                                    $user_id = isset($_SESSION['userID']) ? $_SESSION['userID'] : '';
                                     $f_user = isset($_GET['find-user']) ? $_GET['f-user'] : '';
-                                    $f = $user_id === 'admin' ? $con->query("SELECT * FROM users WHERE user_name = '$f_user' AND user_name <> 'admin'") : $con->query("SELECT * FROM users WHERE user_name = '$f_user' AND chucvu <> 'Admin'");
-                                    $notf = $user_id === 'admin' ? $con->query("SELECT * FROM users WHERE user_name <> 'admin'") : $con->query("SELECT * FROM users WHERE  chucvu <> 'Admin'");
+                                    $f = $my_id === 'admin' ? $con->query("SELECT * FROM users WHERE user_name = '$f_user' AND user_name <> 'admin'") : $con->query("SELECT * FROM users WHERE user_name = '$f_user' AND chucvu <> 'Admin'");
+                                    $notf = $my_id === 'admin' ? $con->query("SELECT * FROM users WHERE user_name <> 'admin'") : $con->query("SELECT * FROM users WHERE  chucvu <> 'Admin'");
                                     $re = isset($_GET['find-user']) ? $f : $notf;
 
                                     if (($f_user == '' ? $notf : $re)->num_rows > 0) {
@@ -163,22 +155,11 @@ require_once("./includes/header.php");
                                         }
                                     }
                                     if (isset($_POST['del']) && isset($_SESSION['userID'])) {
-                                        $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
-                                        $re = $con->query($sql)->fetch_assoc();
-                                        if ($re['chucvu'] === 'Admin') {
+                                        if ($myRank === 'Admin') {
                                             if (isset($_POST['checkbox'])) {
                                                 $cbarr = $_POST['checkbox'];
                                                 foreach ($cbarr as $id) {
-                                                    $post = $con->query("SELECT post_id FROM posts INNER JOIN users ON users.user_name = posts.user_name WHERE users.user_name = '$id'");
-                                                    if ($post->num_rows > 0) {
-                                                        while ($p = $post->fetch_assoc()) {
-                                                            $pid = $p['post_id'];
-                                                            $con->query("DELETE FROM comments WHERE comments.post_id = '$pid'");
-                                                        }
-                                                    }
-                                                    $con->query("DELETE FROM posts WHERE user_name = '$id'");
-                                                    $sql = $con->query("DELETE FROM users WHERE user_name = '$id'");
-                                                    if ($sql) {
+                                                    if ($userObj->deleteUser($id)) {
                                                         echo "<meta http-equiv='refresh' content='0'>";
                                                     }
                                                 }
@@ -186,9 +167,7 @@ require_once("./includes/header.php");
                                         }
                                     }
                                     if (isset($_POST['save']) && isset($_SESSION['userID'])) {
-                                        $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
-                                        $re = $con->query($sql)->fetch_assoc();
-                                        if ($re['chucvu'] === 'Admin') {
+                                        if ($myRank === 'Admin') {
                                             if (isset($_POST['checkbox'])) {
                                                 $cbarr = $_POST['checkbox'];
                                                 $check = $user_id === 'admin' ? $con->query("SELECT * FROM users WHERE user_name <> 'admin'") : $con->query("SELECT * FROM users WHERE  chucvu <> 'Admin'");
@@ -273,7 +252,7 @@ require_once("./includes/header.php");
                                     <?php
                                     $user_id = isset($_SESSION['userID']) ? $_SESSION['userID'] : '';
                                     $f_post = isset($_GET['find-post']) ? $_GET['f-post'] : '';
-                                    $f = $con->query("SELECT * FROM posts WHERE post_id = '$f_post'");
+                                    $f = $postObject->getPost($f_post);
                                     $notf = $con->query("SELECT * FROM posts");
                                     $re = isset($_GET['find-post']) ? $f : $notf;
 
@@ -297,22 +276,11 @@ require_once("./includes/header.php");
                                         }
                                     }
                                     if (isset($_POST['del-post']) && isset($_SESSION['userID'])) {
-                                        $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
-                                        $re = $con->query($sql)->fetch_assoc();
-                                        if ($re['chucvu'] === 'Admin') {
+                                        if ($myRank === 'Admin') {
                                             if (isset($_POST['check'])) {
                                                 $carr = $_POST['check'];
                                                 foreach ($carr as $post) {
-                                                    $allCmt = $con->query("SELECT * FROM comments WHERE comments.post_id = '$post'");
-                                                    if ($allCmt->num_rows > 0) {
-                                                        while ($row = $allCmt->fetch_assoc()) {
-                                                            $con->query("DELETE FROM likes WHERE cmt_id = '" . $row['comment_id'] . "'");
-                                                        }
-                                                    }
-                                                    $con->query("DELETE FROM comments WHERE comments.post_id = '$post'");
-                                                    $con->query("DELETE FROM likes WHERE post_id = '" . $post . "'");
-                                                    $sql = $con->query("DELETE FROM posts WHERE post_id = '$post'");
-                                                    if ($sql) {
+                                                    if ($postObject->deletePost($post)) {
                                                         echo "<meta http-equiv='refresh' content='0'>";
                                                     } else {
                                                         echo $con->error;
@@ -322,9 +290,7 @@ require_once("./includes/header.php");
                                         }
                                     }
                                     if (isset($_POST['save-post']) && isset($_SESSION['userID'])) {
-                                        $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
-                                        $re = $con->query($sql)->fetch_assoc();
-                                        if ($re['chucvu'] === 'Admin') {
+                                        if ($myRank === 'Admin') {
                                             if (isset($_POST['check'])) {
                                                 $carr = $_POST['check'];
                                                 $post = $con->query("SELECT * FROM posts");
@@ -354,7 +320,7 @@ require_once("./includes/header.php");
                                                         $content = $update[2][$i];
                                                         $nhom = $update[3][$i];
 
-                                                        $resuilt = $con->query("UPDATE posts SET title ='$title', content = '$content', nhom = '$nhom' WHERE post_id = '$p_id'");
+                                                        $resuilt = $postObject->updatePost($p_id, $title, $content, $nhom);
                                                         if ($resuilt) {
                                                             echo "<meta http-equiv='refresh' content='0'>";
                                                         }

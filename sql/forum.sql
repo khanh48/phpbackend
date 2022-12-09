@@ -81,8 +81,8 @@ create table if not exists images(
 -- DELIMITER ;
 -- set global event_scheduler = on;
 
-insert into users(user_name, pass, hoten, chucvu) values('admin', 'abc', 'ADMIN', 'Admin');
-insert into users(user_name, pass, hoten) values('user', 'abc', 'User');
+insert into users(user_name, pass, hoten, chucvu) values('admin', '900150983cd24fb0d6963f7d28e17f72', 'ADMIN', 'Admin');
+insert into users(user_name, pass, hoten) values('user', '900150983cd24fb0d6963f7d28e17f72', 'User');
 -- alter table users add column date timestamp default current_timestamp() after avatar
 
 -- alter table posts add constraint fk_posts foreign key(user_name) references users(user_name);

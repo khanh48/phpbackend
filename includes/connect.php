@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(E_ALL ^ E_NOTICE);
+include_once(dirname(__DIR__) . "/object/user.php");
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -11,6 +12,8 @@ if ($con->connect_error) {
 }
 $logged = isset($_SESSION["userID"]);
 $my_id = $logged ? $_SESSION["userID"] : null;
+$userObj = new User($con);
+$myRank = $logged ? $userObj->getUser($my_id)['chucvu'] : "undefine";
 function getTime($datetime, $full = false)
 {
     $tz = new DateTimeZone("Asia/Ho_Chi_Minh");

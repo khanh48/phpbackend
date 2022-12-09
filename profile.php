@@ -1,6 +1,12 @@
 <?php
 require "./includes/connect.php";
 require_once("./includes/header.php");
+include_once("./object/posts.php");
+$postOj = new Post($con);
+
+if (isset($_POST['delete-post']) && $logged) {
+    $postOj->deletePost($_POST["delete-post"]);
+}
 ?>
 
 <body>
@@ -23,7 +29,7 @@ require_once("./includes/header.php");
                     echo "<div class='content'>
                     <div class='mt-0 ms-2'>
                     <div class=' c-header'>
-                        <img class='avt-profile rounded-circle' src='".$originAvt."'>
+                        <img class='avt-profile rounded-circle' src='" . $originAvt . "'>
                         <div>
                         <div class='name'>" . $row['hoten'] . "</div>";
                     if ($re_post->num_rows > 0) {
@@ -40,8 +46,8 @@ require_once("./includes/header.php");
                     $nam = $row['gioitinh'] == 'Nam' ? 'selected' : '';
                     $nu = $row['gioitinh'] == 'Nữ' ? 'selected' : '';
 
-                    if($userID === $my_id){
-                    echo"<div class='content'><div><form method='post'  enctype='multipart/form-data'>
+                    if ($userID === $my_id) {
+                        echo "<div class='content'><div><form method='post'  enctype='multipart/form-data'>
                         <div class='form-group p-1'>
                         <table>
                         <tr>
@@ -79,24 +85,26 @@ require_once("./includes/header.php");
                                 <td><textarea class='form-control f-sm' name='sothich' id='sothich' />" . $row['sothich'] . "</textarea></td>
                             </tr>
                         </table>
-                        <button class='f-sm btn btn-success my-2' name='save'>Lưu</button>
+                        <div>
+                            <button class='btn btn-success my-2 f-sm' name='save'>Lưu</button>
+                            <span class='my-auto' data-bs-toggle='modal' data-bs-target='#changePass' id='changePassBtn'>Đổi mật khẩu</span></div>
                         </div></form></div></div>";
-                    }else{
-                        $posts = $con->query("SELECT * FROM posts WHERE user_name='$userID' ORDER BY date DESC");
-                        if($posts->num_rows > 0){
-                            while($row = $posts->fetch_assoc()){
-                                $post = $row['post_id'];
-                                $poster = $con->query("SELECT * FROM users WHERE user_name = '$userID'")->fetch_assoc();
-                                $result_cmt = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$post'")->fetch_assoc();
-                                $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE post_id = '$post' AND is_post = true")->fetch_assoc();
-                                $total_cmt = $result_cmt['total'] > 0 ? $result_cmt['total'] : '';
-                                $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
-                                $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE post_id = '$post' AND user_name = '$my_id'")->fetch_assoc();
-                                $is_liked = '';
-                                if ($liked["liked"] > 0)
-                                    $is_liked = "fas-liked";
-                                echo "<div class='content rm'>
-                                        <div >
+                    }
+                    $posts = $con->query("SELECT * FROM posts WHERE user_name='$userID' ORDER BY date DESC");
+                    if ($posts->num_rows > 0) {
+                        while ($row = $posts->fetch_assoc()) {
+                            $post = $row['post_id'];
+                            $poster = $userObj->getUser($userID);
+                            $result_cmt = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$post'")->fetch_assoc();
+                            $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE post_id = '$post' AND is_post = true")->fetch_assoc();
+                            $total_cmt = $result_cmt['total'] > 0 ? $result_cmt['total'] : '';
+                            $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
+                            $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE post_id = '$post' AND user_name = '$my_id'")->fetch_assoc();
+                            $is_liked = '';
+                            if ($liked["liked"] > 0)
+                                $is_liked = "fas-liked";
+                            echo "<div class='content rm'>
+                                        <div class='d-flex justify-content-between'>
                                             <div class=' c-header'>
                                                 <span><img class='avt' src='" . $poster['avatar'] . "'></span>
                                                 <div class='c-name'>
@@ -105,7 +113,12 @@ require_once("./includes/header.php");
                                                         </div>
                                                     </span>
                                                 </div>
-                                            </div>
+                                            </div>";
+                            if ($myRank === "Admin" || $poster['user_name'] === $my_id) {
+                                echo "<button name='delete-notification' class='btn-close py-1 px-3' value='a' data-bs-toggle='modal'
+                                                            data-bs-target='#delete-post' onclick=\"deletePost($post)\"></button>";
+                            }
+                            echo "
                                         </div>
                                         <div>
                                             <div class='title'>
@@ -117,20 +130,20 @@ require_once("./includes/header.php");
                                         " . $row['content'] . "
                                         </div>
                                         <div class='m-0 hide wh' style='text-align: end;'><span class='read-more'></span></div>";
-                        
-                                $images = $con->query("SELECT * FROM images WHERE `type` = 'post' AND post_id = " . $row['post_id']);
-                                if ($images->num_rows > 0) {
-                                    echo "<div id='forpost" . $row['post_id'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
+
+                            $images = $con->query("SELECT * FROM images WHERE `type` = 'post' AND post_id = " . $row['post_id']);
+                            if ($images->num_rows > 0) {
+                                echo "<div id='forpost" . $row['post_id'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
                                         <div class='carousel-inner '>";
-                                    $i = 0;
-                                    while ($img = $images->fetch_assoc()) {
-                                        $active = $i == 0 ? "active" : "";
-                                        $i++;
-                                        echo "<div class='carousel-item $active'>
+                                $i = 0;
+                                while ($img = $images->fetch_assoc()) {
+                                    $active = $i == 0 ? "active" : "";
+                                    $i++;
+                                    echo "<div class='carousel-item $active'>
                                                 <img src='" . $img['url'] . "' class='d-block w-100 postImg' alt='...'>
                                                 </div>";
-                                    }
-                                    echo "</div>
+                                }
+                                echo "</div>
                                             <button class='carousel-control-prev' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='prev'>
                                                 <span class='carousel-control-prev-icon' aria-hidden='true'></span>
                                                 <span class='visually-hidden'>Previous</span>
@@ -140,9 +153,9 @@ require_once("./includes/header.php");
                                                 <span class='visually-hidden'>Next</span>
                                             </button>
                                             </div> ";
-                                }
-                        
-                                echo " <hr class='m-0'>
+                            }
+
+                            echo " <hr class='m-0'>
                                     <div class='interactive p-1 m-0'>
                                         <button class='like p-1' onclick=\" like(" . $row['post_id'] . ",true,'" . $my_id . "', '" . $poster['user_name'] . "');\">
                                             <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "'></i>
@@ -158,9 +171,8 @@ require_once("./includes/header.php");
                                     </button>
                                     </div>
                                 </div>";
-                            }
-                            echo "<script>loadReadMore()</script>";
                         }
+                        echo "<script>loadReadMore()</script>";
                     }
                 }
 
@@ -171,7 +183,7 @@ require_once("./includes/header.php");
                     $sdt = $_POST['sdt'];
                     $st = $_POST['sothich'];
                     $avt = $originAvt;
-                    if($_FILES['avt']['tmp_name'] !== ''){
+                    if ($_FILES['avt']['tmp_name'] !== '') {
                         $file = $_FILES['avt'];
                         $target_dir = "./lib/images/" . $my_id . "/";
                         if (!file_exists($target_dir)) {
@@ -200,6 +212,57 @@ require_once("./includes/header.php");
             ?>
         </div>
 
+    </div>
+
+
+    <div class="modal modal-alert py-5" tabindex="-1" role="dialog" id="delete-post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-3 shadow">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0">Xóa bài viết?</h5>
+                    <p class="mb-0">Bài viết sẽ bị xóa vĩnh viễn.</p>
+                </div>
+                <form method="post">
+                    <div class="modal-footer flex-nowrap p-0">
+                        <button name="delete-post"
+                            class="btn btn-lg btn-link text-danger fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"
+                            id="confirm-yes"><strong>Xóa</strong></button>
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+                            data-bs-dismiss="modal">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-alert py-5" tabindex="-1" role="dialog" id="changePass">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content rounded-3 shadow">
+                <div class="modal-body p-4">
+                    <small class="text-danger" id="failToChangePass"></small>
+                    <table>
+                        <tr>
+                            <td><label class="form-label" for="oldPass">Mật khẩu cũ:</label></td>
+                            <td><input class="form-control" type="password" name="oldPass" id="oldPass"></td>
+                        </tr>
+                        <tr>
+                            <td><label class="form-label" for="newPass">Mật khẩu mới:</label></td>
+                            <td><input class="form-control" type="password" name="newPass" id="newPass"></td>
+                        </tr>
+                        <tr>
+                            <td><label class="form-label" for="reOldPass">Nhập lại mật khẩu:</label></td>
+                            <td><input class="form-control" type="password" name="reOldPass" id="reNewPass"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer flex-nowrap p-0">
+                    <button
+                        class="btn btn-lg btn-link text-success fs-6 text-decoration-none col-6 m-0 rounded-0 border-end"
+                        id="changePassword"><strong>Xác nhận</strong></button>
+                    <button class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0"
+                        data-bs-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="toast-container position-fixed bottom-0 start-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

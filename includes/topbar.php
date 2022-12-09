@@ -79,7 +79,8 @@
             }
             if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                 unset($_SESSION['userID']);
-                header('Location: ./index');
+                echo "<script>sessionStorage.removeItem('uid');
+                window.location.href = './';</script>";
             }
             ?>
 

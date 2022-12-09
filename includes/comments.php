@@ -1,5 +1,10 @@
 <?php
 require("./connect.php");
+include_once(dirname(__DIR__) . "/object/comments.php");
+include_once(dirname(__DIR__) . "/object/posts.php");
+$postOj = new Post($con);
+$commentOj = new Comment($con);
+
 
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 if (isset($_POST['comment'])) {
@@ -54,7 +59,7 @@ if ($re->num_rows ? $re->num_rows > 0 : false) {
 ?>
 
 <div class='content rm' id='cm<?php echo $cmt_id; ?>'>
-    <div>
+    <div class="d-flex justify-content-between">
         <div class=' c-header'>
             <span>
                 <a class='name' href='./profile?user=<?php echo $poster['user_name']; ?>'>
@@ -70,6 +75,10 @@ if ($re->num_rows ? $re->num_rows > 0 : false) {
                 </span>
             </div>
         </div>
+        <?php if ($my_id === $poster['user_name'] || $my_id === $postOj->getPost($id)['user_name']) { ?>
+        <button name='delete-notification' class='btn-close py-1 px-3' value='a' data-bs-toggle='modal'
+            data-bs-target='#delete-cmt' onclick="deleteCmt(<?php echo $cmt_id; ?>)"></button>
+        <?php } ?>
     </div>
     <div class='c-body'><?php echo $row['content']; ?>
     </div>
