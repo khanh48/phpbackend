@@ -47,15 +47,15 @@ create table if not exists likes(
     constraint fk_likes_cmt foreign key(cmt_id) references comments(comment_id),
     constraint fk_likes_user foreign key(user_name) references users(user_name)
 );
-create table if not exists notify(
-	notify_id bigint not null,
+create table if not exists notificstions(
+	id bigint not null,
     readed boolean default false,
     from_user char(13) not null,
     msg nvarchar(200) not null,
     to_user char(13) not null,
 	`url` varchar(200),
     `date` timestamp,
-	constraint pk_notify primary key(notify_id),
+	constraint pk_notify primary key(id),
     constraint fk_notify_from foreign key(from_user) references users(user_name),
     constraint fk_notify_to foreign key(to_user) references users(user_name)
 );
@@ -71,12 +71,20 @@ create table if not exists images(
     constraint fk_images_owner foreign key(`owner`) references users(user_name)
 );
 
+delimiter $$
+create function deleteLikes(id bigint) returns boolean
+begin
+
+end
+
+$$
+delimiter ;
 -- DELIMITER //
 -- create event delete_event
 -- on schedule at current_timestamp + interval 1 day
 -- on completion preserve
 -- do begin 
--- 	delete from forum.notify where `date` < date_sub(now(), interval 7 day) and readed = true;
+-- 	delete from forum.notificstions where `date` < date_sub(now(), interval 7 day) and readed = true;
 -- end//
 -- DELIMITER ;
 -- set global event_scheduler = on;
@@ -91,8 +99,8 @@ insert into users(user_name, pass, hoten) values('user', '900150983cd24fb0d6963f
 -- alter table likes add constraint fk_likes_post foreign key(post_id) references posts(post_id);
 -- alter table likes add constraint fk_likes_cmt foreign key(cmt_id) references comments(comment_id);
 -- alter table likes add constraint fk_user foreign key(user_name) references users(user_name);
--- alter table notify add constraint fk_from foreign key(from_user) references users(user_name);
--- alter table notify add constraint fk_to foreign key(to_user) references users(user_name);
+-- alter table notificstions add constraint fk_from foreign key(from_user) references users(user_name);
+-- alter table notificstions add constraint fk_to foreign key(to_user) references users(user_name);
 
 
 

@@ -21,6 +21,13 @@ class Post
         return $post->fetch_assoc();
     }
 
+
+    function likePost($postID)
+    {
+        $post = $this->conn->query("SELECT * FROM posts WHERE title LIKE '%$postID%'");
+        return $post;
+    }
+
     function getPostFromUser($userID)
     {
         $post = $this->conn->query("SELECT * FROM posts WHERE user_name = '$userID'");

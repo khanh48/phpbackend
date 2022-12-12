@@ -215,7 +215,13 @@ if ($myRank !== 'Admin') {
                                     ?>
                                 </div>
                             </tbody>
-                            <caption><button type="submit" class="btn-success btn ms-2" name="save">Lưu</button>
+                            <caption>
+
+                                <span class='my-auto'>
+                                    <input type="checkbox" id='checkBoxAll' class="invisible">
+                                    <label for="checkBoxAll" class="checkAll">Chọn tất cả</label>
+                                </span>
+                                <button type="submit" class="btn-success btn ms-2" name="save">Lưu</button>
                                 <button type="submit" class="btn-danger btn ms-2" name="del">Xoá</button>
                             </caption>
                         </form>
@@ -230,7 +236,7 @@ if ($myRank !== 'Admin') {
                     <form action="" method="get">
                         <div class="row">
                             <div class="form-group col-5 ms-2">
-                                <input class="form-control f-sm" type="text" name="f-post" placeholder="Post ID">
+                                <input class="form-control f-sm" type="text" name="f-post" placeholder="Tiêu đề">
                             </div>
                             <button type="submit" class="btn btn-success" name="find-post">Tìm</button>
                         </div>
@@ -250,29 +256,29 @@ if ($myRank !== 'Admin') {
                             <tbody>
                                 <div class="form-group">
                                     <?php
-                                    $user_id = isset($_SESSION['userID']) ? $_SESSION['userID'] : '';
-                                    $f_post = isset($_GET['find-post']) ? $_GET['f-post'] : '';
-                                    $f = $postObject->getPost($f_post);
+                                    $user_id = $my_id;
+                                    $f_post = isset($_GET['f-post']) ? $_GET['f-post'] : "";
+                                    $f = $postObject->likePost($f_post);
                                     $notf = $con->query("SELECT * FROM posts");
                                     $re = isset($_GET['find-post']) ? $f : $notf;
 
-                                    if (($f_post == '' ? $notf : $re)->num_rows > 0) {
-                                        while ($row = ($f_post == '' ? $notf : $re)->fetch_assoc()) {
+                                    if ($re->num_rows > 0) {
+                                        while ($row = $re->fetch_assoc()) {
                                             $bac = $row['nhom'] == 'Bắc' ? 'selected' : '';
                                             $trung = $row['nhom'] == 'Trung' ? 'selected' : '';
                                             $nam = $row['nhom'] == 'Nam' ? 'selected' : '';
                                             echo "<tr>
-                                        <td><input type='checkbox' name='check[]' value='" . $row['post_id'] . "'></td>
-                                        <td>" . $row['post_id'] . "</td>
-                                        <td><input class='form-control f-sm' type='text' name='title[]' value='" . $row['title'] . "' /></td>
-                                        <td><textarea class='form-control f-sm' name='content[]'/>" . $row['content'] . "</textarea></td>
-                                        <td>" . $row['user_name'] . "</td>
-                                        <td><select class='form-control f-sm mb-1' name='group[]'>
-                                        <option value='Bắc' " . $bac . ">Bắc</option>
-                                        <option value='Trung' " . $trung . ">Trung</option>
-                                        <option value='Nam' " . $nam . ">Nam</option>
-                                        </select></td>
-                                    </tr>";
+                                                    <td><input type='checkbox' name='check[]' value='" . $row['post_id'] . "'></td>
+                                                    <td>" . $row['post_id'] . "</td>
+                                                    <td><input class='form-control f-sm' type='text' name='title[]' value='" . $row['title'] . "' /></td>
+                                                    <td><textarea class='form-control f-sm' name='content[]'/>" . $row['content'] . "</textarea></td>
+                                                    <td>" . $row['user_name'] . "</td>
+                                                    <td><select class='form-control f-sm mb-1' name='group[]'>
+                                                    <option value='Bắc' " . $bac . ">Bắc</option>
+                                                    <option value='Trung' " . $trung . ">Trung</option>
+                                                    <option value='Nam' " . $nam . ">Nam</option>
+                                                    </select></td>
+                                                    </tr>";
                                         }
                                     }
                                     if (isset($_POST['del-post']) && isset($_SESSION['userID'])) {
@@ -340,7 +346,12 @@ if ($myRank !== 'Admin') {
                                     ?>
                                 </div>
                             </tbody>
-                            <caption><button type="submit" class="btn-success btn ms-2" name="save-post">Lưu</button>
+                            <caption>
+                                <span class='my-auto'>
+                                    <input type="checkbox" id='checkAll' class="invisible">
+                                    <label for="checkAll" class="checkAll">Chọn tất cả</label>
+                                </span>
+                                <button type="submit" class="btn-success btn ms-2" name="save-post">Lưu</button>
                                 <button type="submit" class="btn-danger btn ms-2" name="del-post">Xoá</button>
                             </caption>
                         </form>

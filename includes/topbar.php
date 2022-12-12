@@ -1,6 +1,6 @@
 <header class="header">
     <div class="logo">
-        <a href="./index"><img class="img" src="./lib/images/cdlncd.png" /></a>
+        <a href="./"><img class="img" src="./lib/images/cdlncd.png" /></a>
         <form method="get">
             <div class="search-group">
                 <input class="search" type="text" name="find" placeholder="Tìm kiếm" />

@@ -826,7 +826,8 @@ a {
     text-decoration: underline;
 }
 
-#changePassBtn {
+#changePassBtn,
+.checkAll {
 
     -webkit-user-select: none;
     /* Safari */
@@ -836,7 +837,8 @@ a {
     /* Standard syntax */
 }
 
-#changePassBtn:hover {
+#changePassBtn:hover,
+.checkAll:hover {
     cursor: pointer;
     text-decoration: underline;
 }

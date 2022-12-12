@@ -8,7 +8,7 @@ $commentOj = new Comment($con);
 
 if (isset($_GET["r"])) {
     $read = $_GET["r"];
-    $con->query("UPDATE notify SET readed = true WHERE notify_id = $read");
+    $con->query("UPDATE notificstions SET readed = true WHERE id = $read");
 }
 if (isset($_POST['delete-post']) && $logged) {
     $postOj->deletePost($_POST["delete-post"]);
