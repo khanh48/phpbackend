@@ -14,8 +14,9 @@ html {
     position: fixed;
     overflow: hidden;
     z-index: 1;
-    width: 100%;
+    width: 250;
     height: 0;
+    right: 0;
     background-color: rgba(0, 0, 0, 0.4);
     color: blanchedalmond;
     transition: 0.3s ease;
