@@ -13,30 +13,31 @@ html {
 .full-s-menu {
     position: fixed;
     overflow: hidden;
-    z-index: 1;
-    width: 250;
+    box-shadow: 5px turquoise;
+    z-index: 2;
+    width: 250px;
     height: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     color: blanchedalmond;
     transition: 0.3s ease;
 }
 
 #item {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: start;
     height: 100%;
 }
 
 #item ul {
+    width: 100%;
     align-items: center;
     list-style: none;
     padding: 0;
 }
 
 #item li {
-    font-size: 25px;
     margin: 8px;
     height: 30px;
 }
@@ -50,7 +51,8 @@ html {
 #item a {
     display: flex;
     height: 30px;
-    justify-content: center;
+    font-size: 36px;
+    justify-content: flex-start;
     align-items: center;
     text-decoration: none;
     color: #bbbbbb;
@@ -283,6 +285,7 @@ body::-webkit-scrollbar-thumb:hover {
 .change .bar1 {
     -webkit-transform: rotate(-45deg) translate(-8px, 7px);
     transform: rotate(-45deg) translate(-8px, 7px);
+    transition: 0.3s ease;
 }
 
 .change .bar2 {
@@ -292,6 +295,7 @@ body::-webkit-scrollbar-thumb:hover {
 .change .bar3 {
     -webkit-transform: rotate(45deg) translate(-8px, -8px);
     transform: rotate(45deg) translate(-8px, -8px);
+    transition: 0.3s ease;
 }
 
 .info {
