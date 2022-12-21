@@ -502,7 +502,7 @@ div.notify::-webkit-scrollbar-thumb:hover {
 }
 
 .postImg {
-    height: calc((100vh + 100vw) * 0.25);
+    height: calc((100vh + 50vw) * 0.25);
     width: auto;
     object-fit: contain;
 }
