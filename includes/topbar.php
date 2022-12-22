@@ -1,95 +1,85 @@
-<header class="header">
-    <div class="logo">
-        <a href="./"><img class="img" src="./lib/images/cdlncd.png" /></a>
-        <form method="get">
-            <div class="search-group">
-                <input class="search" type="text" name="find" placeholder="Tìm kiếm" />
-                <button type="submit" name="go" class="search-btn"><img src="./lib/images/search_icon.png"></button>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <a class="navbar-brand mt-2 mt-lg-0" href="./">
+                <img src="./lib/images/cdlncd.png" height="15" alt="MDB Logo" loading="lazy" />
+            </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Projects</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+            <!-- Icon -->
+            <a class="text-reset me-3" href="#">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+
+            <!-- Notifications -->
+            <div class="dropdown">
+                <a class="me-3 dropdown" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="true">
+                    <i class="fas fa-bell"><span
+                            class="badge rounded-pill position-absolute top-0 start-100 translate-middle bg-danger">1</span></i>
+
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="#">Some news</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Another news</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </li>
+                </ul>
             </div>
-            <?php
-            if (isset($_GET['go'])) {
-                $content = $_GET['find'];
-                echo "<meta http-equiv='refresh' content='0;url=./search?search-content=" . $content . "&type=0&search' />";
-            }
-            ?>
-        </form>
-    </div>
-    <nav id="menu">
-        <div>
-            <marquee behavior="scroll" direction="left">
-                <!-- Cuộc Đời Là Những Chuyến Đi -->
-            </marquee>
+            <!-- Avatar -->
+            <div class="dropdown">
+                <a class="dropdown" href="#" id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
+                        alt="Black and White Portrait of a Man" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                    <li>
+                        <a class="dropdown-item" href="#">My profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-        <?php
-
-        if (!isset($_SESSION['userID'])) {
-            echo "<ul><li class='effect gr-i-m ef open-login' id='login' data-bs-toggle='modal' data-bs-target='#modal-login'>Đăng nhập</li>";
-            echo "<li class='effect gr-i-m ef open-reg' id='reg' data-bs-toggle='modal' data-bs-target='#modal-reg'>Đăng ký</li>
-                        </ul>";
-        }
-        ?>
-    </nav>
-    <div class="menu-toggle">
-        <div>
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </div>
+        <!-- Right elements -->
     </div>
-</header>
-<div class="full-s-menu" id="full-menu">
-    <nav id="item">
-        <ul><?php
-            if (!isset($_SESSION['userID'])) { ?>
-            <li class='log'>
-                <a class='open-login' data-bs-toggle='modal' data-bs-target='#modal-login'>Đăng nhập</a>
-            </li>
-            <li class='log'>
-                <a class='open-reg' data-bs-toggle='modal' data-bs-target='#modal-reg'>Đăng ký</a>
-            </li> <?php } ?>
-
-            <li>
-                <a href="./index.php">Trang chủ</a>
-            </li>
-
-            <?php
-            if (isset($_SESSION['userID'])) {
-                $user_id = $_SESSION['userID'];
-                $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
-                $re = $con->query($sql)->fetch_assoc();
-                echo "<li>
-                    <a href='./profile?user=$my_id'>Hồ sơ cá nhân</a>
-                </li><li class='log'>
-                <a href='./notification'>Thông báo</a>
-            </li>";
-
-                if ($re['chucvu'] === 'Admin') {
-                    echo "<li><a href='./admin.php'>Quản lý</a></li>";
-                }
-            }
-            ?>
-            <li>
-                <a href="./weather.html">Thời tiết</a>
-            </li>
-            <?php
-            if (isset($_SESSION['userID'])) {
-                echo "<li>
-                    <a href='index.php?logout'>Đăng xuất</a></li>";
-            }
-            if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
-                unset($_SESSION['userID']);
-                echo "<script>sessionStorage.removeItem('uid');
-                window.location.href = './';</script>";
-            }
-            ?>
-
-        </ul>
-    </nav>
-</div>
-<?php
-if (!isset($_SESSION['userID'])) {
-    include("loginform.php");
-}
-
-?>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

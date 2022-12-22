@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" crossorigin="anonymous">
     <link rel="stylesheet" href="./lib/css/main.css">
     <script src="./lib/js/jquery.min.js"></script>
-    <script src="./lib/js/bootstrap.min.js"></script>
+    <script src="./lib/js/bootstrap.bundle.min.js"></script>
     <script src="./lib/js/socket.js"></script>
     <script src="./lib/js/main.js"></script>
 </head>

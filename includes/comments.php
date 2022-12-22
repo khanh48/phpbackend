@@ -89,7 +89,7 @@ if ($re->num_rows ? $re->num_rows > 0 : false) {
     <div class='interactive p-1 m-0'>
         <button class='like p-1'
             onclick=" like('<?php echo $cmt_id; ?>', false, '<?php echo $my_id; ?>', '<?php echo $poster['user_name']; ?>');">
-            <i class='fas fa-heart <?php echo $is_liked; ?>' id='cl<?php echo $cmt_id; ?>'></i>
+            <i class='fas fa-heart action <?php echo $is_liked; ?>' id='cl<?php echo $cmt_id; ?>'></i>
             <span class='count-like' id='c<?php echo $cmt_id; ?>'><?php echo $total_like; ?></span>
         </button>
     </div>

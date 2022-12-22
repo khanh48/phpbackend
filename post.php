@@ -96,10 +96,10 @@ if (isset($_POST['delete-cmt']) && $logged) {
                             <div class='interactive p-1 m-0'>
                                 <button class='like p-1' onclick=\" like(" . $row['post_id'] . ",true,'" . $my_id
                             . "','" . $poster["user_name"] . "');\">
-                    <i class='fas fa-heart " . $is_liked . "' id='pl" . $row['post_id'] . "''></i>
+                    <i class='fas fa-heart action " . $is_liked . "' id='pl" . $row['post_id'] . "''></i>
                                     <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
                                 </button>
-                                <button class='share p-1'><i class='fas fa-share'></i><span class='count-share'></span>
+                                <button class='share p-1'><i class='fas fa-share action'></i><span class='count-share'></span>
                                 </button>
                             </div>
                         </div>";
