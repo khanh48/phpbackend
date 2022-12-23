@@ -62,9 +62,7 @@ html {
     display: block;
 }
 
-.show {
-    height: 100%;
-}
+
 
 .blur {
     filter: blur(2px);
