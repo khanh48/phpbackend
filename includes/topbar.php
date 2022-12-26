@@ -1,5 +1,8 @@
+<?php
+require_once("./includes/connect.php")
+?>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
@@ -32,7 +35,8 @@
         <!-- Collapsible wrapper -->
 
         <!-- Right elements -->
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center nav-right">
+            <a class="nav-link me-3" href="#" data-bs-toggle='modal' data-bs-target='#modal-login'>Đăng nhập</a>
             <!-- Icon -->
             <a class="text-reset me-3" href="#">
                 <i class="fas fa-shopping-cart"></i>
@@ -62,18 +66,18 @@
             <div class="dropdown">
                 <a class="dropdown" href="#" id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                        alt="Black and White Portrait of a Man" loading="lazy" />
+                    <img src="<?php echo $userObj->getUser($my_id)["avatar"]; ?>" class="rounded-circle" height="25"
+                        alt="avatar" loading="lazy" />
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
-                        <a class="dropdown-item" href="#">My profile</a>
+                        <a class="dropdown-item" href="./profile?user=<?php echo $my_id; ?>">Trang cá nhân</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#">Settings</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="#">Đăng xuất</a>
                     </li>
                 </ul>
             </div>
@@ -82,4 +86,10 @@
     </div>
     <!-- Container wrapper -->
 </nav>
+<?php
+if (!isset($_SESSION['userID'])) {
+    include("loginform.php");
+}
+
+?>
 <!-- Navbar -->
