@@ -18,7 +18,7 @@ if (isset($_POST['comment'])) {
             $getUser = $con->query("SELECT * FROM users WHERE user_name = '$my_id'")->fetch_assoc();
             $fullName = isset($getUser["hoten"]) ? $getUser["hoten"] : "";
             $msg = $fullName . " đã bình luận trong bài viết của bạn.";
-            $con->query("INSERT INTO notificstions(id, from_user, msg, to_user, url) VALUES($milliseconds,'$my_id', '$msg', '" . $poster . "', './post.php?id=$id')");
+            $con->query("INSERT INTO notifications(id, from_user, msg, to_user, url) VALUES($milliseconds,'$my_id', '$msg', '" . $poster . "', './post.php?id=$id')");
 
             echo "<script>sendcm('$my_id','" . $poster . "', $milliseconds, '" . $msg . "', $id)</script>";
         }

@@ -47,7 +47,7 @@ if ($re->num_rows > 0) {
                     <div class=' c-header'>
                         <span>
                         <a class='name' href='./profile?user=" . $poster['user_name'] . "'>
-                        <img class='avt' src='" . $poster['avatar'] . "'></a></span>
+                        <img class='avt' src='" . $poster['avatar'] . "' alt='avatar'></a></span>
                         <div class='c-name'>
                             <span><a class='name' href='./profile?user=" . $poster["user_name"] . "'>" . $poster['hoten'] . "</a>
                                 <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small>

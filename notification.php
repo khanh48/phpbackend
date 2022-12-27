@@ -3,13 +3,13 @@ require("./includes/connect.php");
 include("./includes/header.php");
 
 if (isset($_GET['delete-notification']) && $logged) {
-    $con->query("DELETE FROM notificstions WHERE id = " . $_GET['delete-notification']);
+    $con->query("DELETE FROM notifications WHERE id = " . $_GET['delete-notification']);
 }
 if (isset($_POST['make-as-read']) && $logged) {
-    $con->query("UPDATE notificstions SET readed = 1 WHERE to_user = '$my_id'");
+    $con->query("UPDATE notifications SET readed = 1 WHERE to_user = '$my_id'");
 }
 if (isset($_POST['delete-notifications'])) {
-    $con->query("DELETE FROM notificstions WHERE readed = 1 AND to_user = '$my_id'");
+    $con->query("DELETE FROM notifications WHERE readed = 1 AND to_user = '$my_id'");
 }
 ?>
 
@@ -43,7 +43,7 @@ if (isset($_POST['delete-notifications'])) {
             <div class="content">
                 <form method="get">
                     <?php
-                    $notifications = $con->query("SELECT * FROM notificstions WHERE to_user = '$my_id' ORDER BY date DESC");
+                    $notifications = $con->query("SELECT * FROM notifications WHERE to_user = '$my_id' ORDER BY date DESC");
                     if ($notifications->num_rows > 0) {
                         while ($row = $notifications->fetch_assoc()) {
                     ?>

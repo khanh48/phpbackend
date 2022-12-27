@@ -28,7 +28,7 @@ if (isset($_POST["id"]) && isset($_POST["isPost"]) && isset($_POST["userName"]) 
                 $mid = isset($resultID["post_id"]) ? $resultID["post_id"] : "";
                 if ($isPost == "true")
                     $mid = $id;
-                $con->query("INSERT INTO notificstions(id, from_user, msg, to_user, url) VALUES($milliseconds,'$userName', '$msg', '$to', './post.php?id=$mid')");
+                $con->query("INSERT INTO notifications(id, from_user, msg, to_user, url) VALUES($milliseconds,'$userName', '$msg', '$to', './post.php?id=$mid')");
             }
 
             $con->query("INSERT INTO likes(is_post, user_name, " . $type . ") VALUES($isPost, '$userName', '$id')");

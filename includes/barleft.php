@@ -9,7 +9,7 @@
             </a>
             <div class="notify">
                 <?php
-                $getNotify = $con->query("SELECT * FROM notificstions WHERE to_user = '$my_id' ORDER BY date DESC");
+                $getNotify = $con->query("SELECT * FROM notifications WHERE to_user = '$my_id' ORDER BY date DESC");
                 if ($getNotify->num_rows > 0) {
                     while ($notify = $getNotify->fetch_assoc()) {
                         echo "<a href='" . $notify["url"] . "&r=" . $notify["id"] . "'><div class='notify-content " . ($notify["readed"] ? "" : "unread") . "'>
