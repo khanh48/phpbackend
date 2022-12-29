@@ -7,36 +7,14 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
 }
 ?>
 <!-- Navbar -->
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar sticky-top navbar-expand-lg">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-        </button>
+        <a class="navbar-brand mt-2 mt-lg-0" href="./">
+            <img src="./lib/images/logo.png" height="50" alt="logo">
+        </a><i class="bi bi-bag-fill"></i>
 
-        <!-- Collapsible wrapper -->
-        <div class="offcanvas offcanvas-start" tabindex="-1" aria-labelledby="offCanvasExampleLabel"
-            id="navbarSupportedContent">
-            <!-- Navbar brand -->
-            <!-- Left links -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <a class="navbar-brand mt-2 mt-lg-0" href="./">
-                    <img src="./lib/images/logo.png" height="50" alt="logo">
-                </a>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Projects</a>
-                </li>
-            </ul>
-            <!-- Left links -->
-        </div>
         <!-- Collapsible wrapper -->
 
         <!-- Right elements -->
@@ -70,7 +48,6 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                             ?>
                     </i>
 
-
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-notify">
                     <?php
@@ -87,6 +64,8 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                     </li>
                     <?php
                             }
+                        } else {
+                            echo "<li><a class='dropdown-item' href='#'>Không có thông báo.</a></li>";
                         }
                         ?>
                 </ul>
@@ -108,6 +87,9 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                     </li>
                     <?php } ?>
                     <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
                         <a class="dropdown-item" href="./index?logout">Đăng xuất</a>
                     </li>
                 </ul>
@@ -122,6 +104,5 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
 if (!$logged) {
     include("loginform.php");
 }
-
 ?>
 <!-- Navbar -->

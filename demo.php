@@ -1,56 +1,61 @@
-<!doctype html>
-<html lang="en">
+<?php
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+use Ratchet\MessageComponentInterface;
+use Ratchet\ConnectionInterface;
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+class Chat implements MessageComponentInterface
+{
+    protected $clients;
 
-    <title>Admin Page</title>
-</head>
+    public function __construct()
+    {
+        $this->clients = new \SplObjectStorage;
+    }
 
-<body>
-    <div class="container mt-5">
-        <h1>Admin Page</h1>
-        <p>Welcome,
-            <?php session_start();
-            echo isset($_SESSION['userID']) ? $_SESSION['userID'] : ""; ?>!
-        </p>
+    public function onOpen(ConnectionInterface $conn)
+    {
+        // Store the new connection to send messages to later
+        $this->clients->attach($conn);
 
-        <nav>
-            <ul class="nav nav-pills">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Add Product</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">View Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                </li>
-            </ul>
-        </nav>
+        echo "New connection! ({$conn->resourceId})\n";
+    }
 
-        <div class="card mt-3">
-            <div class="card-body">
-                <h5 class="card-title">Dashboard</h5>
-                <p class="card-text">Welcome to the dashboard!</p>
-            </div>
-        </div>
-    </div>
+    public function onMessage(ConnectionInterface $from, $msg)
+    {
+        $numRecv = count($this->clients) - 1;
+        echo sprintf(
+            'Connection %d sending message "%s" to %d other connection%s' . "\n",
+            $from->resourceId,
+            $msg,
+            $numRecv,
+            $numRecv == 1 ? '' : 's'
+        );
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js">
-    </script>
-</body>
+        foreach ($this->clients as $client) {
+            if ($from !== $client) {
+                // The sender is not the receiver, send to each client connected
+                $client->send($msg);
+            }
+        }
+    }
 
-</html>
+    public function onClose(ConnectionInterface $conn)
+    {
+        // The connection is closed, remove it, as we can no longer send it messages
+        $this->clients->detach($conn);
+
+        echo "Connection {$conn->resourceId} has disconnected\n";
+    }
+
+    public function onError(ConnectionInterface $conn, \Exception $e)
+    {
+        echo "An error has occurred: {$e->getMessage()}\n";
+
+        $conn->close();
+    }
+}
+
+// Run the server application through the WebSocket protocol on port 8080
+$app = new Ratchet\App('localhost', 8080);
+$app->route('/chat', new Chat);
+$app->run();

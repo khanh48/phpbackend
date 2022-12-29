@@ -42,6 +42,10 @@
                         </div>
                     </div>
                 </form>
+                <div class="modal-footer">
+                    <p class="mx-auto">Đã có tài khoản?<a href="#" data-bs-toggle='modal'
+                            data-bs-target='#modal-login'>&nbsp;Đăng nhập</a>.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -77,6 +81,10 @@
                         </div>
                     </div>
                 </form>
+                <div class="modal-footer">
+                    <p class="mx-auto">Chưa có tài khoản?<a href="#" data-bs-toggle='modal'
+                            data-bs-target='#modal-reg'>&nbsp;Đăng ký</a>.</p>
+                </div>
             </div>
         </div>
     </div>
