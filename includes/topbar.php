@@ -75,7 +75,7 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                 <a class="dropdown" href="#" id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <img src="<?php echo $userObj->getUser($my_id)["avatar"]; ?>" class="rounded-circle" height="25"
-                        alt="avatar" loading="lazy" />
+                        alt="avatar">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>

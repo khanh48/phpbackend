@@ -25,6 +25,7 @@ if (isset($_POST['delete-post']) && $logged) {
                 $originAvt = '';
                 if ($re->num_rows > 0) {
                     $row = $re->fetch_assoc();
+
                     $originAvt = $row['avatar'];
                     echo "<div class='content'>
                     <div class='mt-0 ms-2'>
@@ -72,7 +73,7 @@ if (isset($_POST['delete-post']) && $logged) {
                             </tr>
                             <tr>
                                 <td><label for='ngaysinh'>Ngày sinh:</label></td>
-                                <td><input type='date' class='form-control f-sm mb-1' name='ngaysinh' id='ngaysinh' value='" . $row['ngaysinh'] . "' /></td>
+                                <td><input type='date' class='form-control f-sm mb-1' name='ngaysinh' id='ngaysinh' " . ($row['ngaysinh'] == "0000-00-00" ?  '' : ("value='" . $row['ngaysinh']) . "'") . " /></td>
                             </tr>
                             <tr>
                                 <td>
