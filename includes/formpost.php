@@ -5,7 +5,7 @@
     </div>
     <div class="group-file">
         <select class="form-select form-select-sm" name="nhom">
-            <option selected disabled value="">Groups</option>
+            <option selected disabled value="">Nhóm</option>
             <option value="Bắc">Bắc</option>
             <option value="Trung">Trung</option>
             <option value="Nam">Nam</option>

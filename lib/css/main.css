@@ -597,6 +597,9 @@ div.notify::-webkit-scrollbar-thumb:hover {
     .search-group {
         display: inline-flex;
     }
+    .log {
+        display: none;
+    }
 }
 
 @media (min-width: 768px) {
@@ -628,9 +631,6 @@ div.notify::-webkit-scrollbar-thumb:hover {
         height: 45px;
     }
 
-    .log {
-        display: none;
-    }
 }
 
 @media (min-width: 992px) {
@@ -889,4 +889,13 @@ a {
     background-color: #5D7B6F;
     padding: 0px;
     border-bottom: solid 1px black;
+}
+
+caption { 
+    display: table-caption;
+    padding: 10px 0px 0px 0px;
+    caption-side:top;
+  }
+.container-fluid{
+    box-shadow: 0px 3px 10px #42574f;
 }

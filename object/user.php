@@ -35,7 +35,7 @@ class User
         $this->comments->deleteCommentWithUser($userID);
         $this->posts->deletePostWithUserName($userID);
         $this->conn->query("DELETE FROM images WHERE owner = '$userID'");
-        $this->conn->query("DELETE FROM notify WHERE to_user = '$userID' OR from_user = '$userID'");
+        $this->conn->query("DELETE FROM notifications WHERE to_user = '$userID' OR from_user = '$userID'");
         $del = $this->conn->query("DELETE FROM users WHERE user_name = '$userID'");
         return $del ? true : false;
     }
