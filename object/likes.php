@@ -11,30 +11,30 @@ class Like
 
     function getTotalLikeFromPost($postID)
     {
-        $total = $this->conn->query("SELECT COUNT(like_id) AS total FROM likes WHERE post_id = '$postID'")->fetch_assoc()['total'];
+        $total = $this->conn->query("SELECT COUNT(maluotthich) AS total FROM luotthich WHERE mabaiviet = '$postID'")->fetch_assoc()['total'];
         return $total;
     }
 
     function getTotalLikeFromComment($commentID)
     {
-        $total = $this->conn->query("SELECT COUNT(like_id) AS total FROM likes WHERE cmt_id = '$commentID'")->fetch_assoc()['total'];
+        $total = $this->conn->query("SELECT COUNT(maluotthich) AS total FROM luotthich WHERE mabinhluan = '$commentID'")->fetch_assoc()['total'];
         return $total;
     }
 
     function deleteLikeWithPostID($postID)
     {
-        $del = $this->conn->query("DELETE FROM likes WHERE post_id = $postID");
+        $del = $this->conn->query("DELETE FROM luotthich WHERE mabaiviet = $postID");
         return $del ? true : false;
     }
 
     function deleteLikeWithCommentID($cmtID)
     {
-        $del = $this->conn->query("DELETE FROM likes WHERE cmt_id = $cmtID");
+        $del = $this->conn->query("DELETE FROM luotthich WHERE mabinhluan = $cmtID");
         return $del ? true : false;
     }
     function deleteLikeWithUserID($userID)
     {
-        $del = $this->conn->query("DELETE FROM likes WHERE user_name = '$userID'");
+        $del = $this->conn->query("DELETE FROM luotthich WHERE taikhoan = '$userID'");
         return $del ? true : false;
     }
 }

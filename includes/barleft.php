@@ -9,11 +9,11 @@
             </a>
             <div class="notify">
                 <?php
-                $getNotify = $con->query("SELECT * FROM notifications WHERE to_user = '$my_id' ORDER BY date DESC");
+                $getNotify = $con->query("SELECT * FROM thongbao WHERE nguoinhan = '$my_id' ORDER BY ngaytao DESC");
                 if ($getNotify->num_rows > 0) {
                     while ($notify = $getNotify->fetch_assoc()) {
-                        echo "<a href='" . $notify["url"] . "&r=" . $notify["id"] . "'><div class='notify-content " . ($notify["readed"] ? "" : "unread") . "'>
-                        " . $notify["msg"] . "
+                        echo "<a href='" . $notify["url"] . "&r=" . $notify["mathongbao"] . "'><div class='notify-content " . ($notify["trangthai"] ? "" : "unread") . "'>
+                        " . $notify["noidung"] . "
                         </div></a>";
                     }
                 }
@@ -25,11 +25,11 @@
         <div class="name group-name">Bắc</div>
         <div class="ps-1">
             <?php
-            $sql = "SELECT * FROM posts WHERE nhom = 'Bắc' ORDER BY post_id DESC LIMIT 0,3";
+            $sql = "SELECT * FROM baiviet WHERE nhom = 'Bắc' ORDER BY mabaiviet DESC LIMIT 0,3";
             $result = $con->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<div><a href='./post.php?id=" . $row['post_id'] . "'>" . $row['title'] . "</a>
+                    echo "<div><a href='./post.php?id=" . $row['mabaiviet'] . "'>" . $row['tieude'] . "</a>
                                 </div>";
                 }
             }
@@ -40,11 +40,11 @@
         <div class="name group-name">Trung</div>
         <div class="ps-1">
             <?php
-            $sql = "SELECT * FROM posts WHERE nhom = 'Trung' ORDER BY post_id DESC LIMIT 0,3";
+            $sql = "SELECT * FROM baiviet WHERE nhom = 'Trung' ORDER BY mabaiviet DESC LIMIT 0,3";
             $result = $con->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<div><a href='./post.php?id=" . $row['post_id'] . "'>" . $row['title'] . "</a>
+                    echo "<div><a href='./post.php?id=" . $row['mabaiviet'] . "'>" . $row['tieude'] . "</a>
                                 </div>";
                 }
             }
@@ -55,11 +55,11 @@
         <div class="name group-name">Nam</div>
         <div class="ps-1">
             <?php
-            $sql = "SELECT * FROM posts WHERE nhom = 'Nam' ORDER BY post_id DESC LIMIT 0,3";
+            $sql = "SELECT * FROM baiviet WHERE nhom = 'Nam' ORDER BY mabaiviet DESC LIMIT 0,3";
             $result = $con->query($sql);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<div><a href='./post.php?id=" . $row['post_id'] . "'>" . $row['title'] . "</a>
+                    echo "<div><a href='./post.php?id=" . $row['mabaiviet'] . "'>" . $row['tieude'] . "</a>
                                 </div>";
                 }
             }

@@ -14,18 +14,18 @@ class Comment
 
     function getComments($postID)
     {
-        $comment = $this->conn->query("SELECT * FROM comments WHERE post_id = $postID");
+        $comment = $this->conn->query("SELECT * FROM binhluan WHERE mabaiviet = $postID");
         return $comment;
     }
     function getCommentFromUser($userID)
     {
-        $comment = $this->conn->query("SELECT * FROM comments WHERE user_name = '$userID'");
+        $comment = $this->conn->query("SELECT * FROM binhluan WHERE taikhoan = '$userID'");
         return $comment;
     }
 
     function getTotalComment($postID)
     {
-        $total = $this->conn->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$postID'")->fetch_assoc()['total'];
+        $total = $this->conn->query("SELECT COUNT(mabinhluan) AS total FROM binhluan WHERE mabaiviet = '$postID'")->fetch_assoc()['total'];
         return $total;
     }
 
@@ -34,18 +34,18 @@ class Comment
         $comments = $this->getComments($postID);
         if ($comments->num_rows > 0) {
             while ($result = $comments->fetch_assoc()) {
-                $this->likes->deleteLikeWithCommentID($result['comment_id']);
+                $this->likes->deleteLikeWithCommentID($result['mabinhluan']);
             }
         }
 
-        $del = $this->conn->query("DELETE FROM comments WHERE post_id = $postID");
+        $del = $this->conn->query("DELETE FROM binhluan WHERE mabaiviet = $postID");
         return $del ? true : false;
     }
 
     function deleteComment($cmtID)
     {
         $this->likes->deleteLikeWithCommentID($cmtID);
-        $del = $this->conn->query("DELETE FROM comments WHERE comment_id = $cmtID");
+        $del = $this->conn->query("DELETE FROM binhluan WHERE mabinhluan = $cmtID");
 
         return $del ? true : false;
     }
@@ -55,11 +55,11 @@ class Comment
         $comments = $this->getCommentFromUser($userID);
         if ($comments->num_rows > 0) {
             while ($result = $comments->fetch_assoc()) {
-                $this->likes->deleteLikeWithCommentID($result['comment_id']);
+                $this->likes->deleteLikeWithCommentID($result['mabinhluan']);
             }
         }
 
-        $del = $this->conn->query("DELETE FROM comments WHERE user_name = '$userID'");
+        $del = $this->conn->query("DELETE FROM binhluan WHERE taikhoan = '$userID'");
         return $del ? true : false;
     }
 }

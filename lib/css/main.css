@@ -62,8 +62,6 @@ html {
     display: block;
 }
 
-
-
 .blur {
     filter: blur(2px);
 }
@@ -414,7 +412,6 @@ div.notify::-webkit-scrollbar-thumb:hover {
     margin-left: 5px;
     width: 15%;
     border-radius: 15px;
-
 }
 
 .form-select {
@@ -597,6 +594,7 @@ div.notify::-webkit-scrollbar-thumb:hover {
     .search-group {
         display: inline-flex;
     }
+
     .log {
         display: none;
     }
@@ -630,7 +628,6 @@ div.notify::-webkit-scrollbar-thumb:hover {
         margin: 6px;
         height: 45px;
     }
-
 }
 
 @media (min-width: 992px) {
@@ -755,7 +752,6 @@ a {
 }
 
 .fa-bell {
-
     color: #212529;
 }
 
@@ -826,7 +822,6 @@ a {
     text-decoration: underline;
 }
 
-
 .btn-close:focus {
     box-shadow: none;
 }
@@ -845,7 +840,6 @@ a {
 
 #changePassBtn,
 .checkAll {
-
     -webkit-user-select: none;
     /* Safari */
     -ms-user-select: none;
@@ -864,7 +858,6 @@ a {
     width: 250px;
     max-height: 300px;
     overflow: auto;
-
 }
 
 .dropdown-notify::-webkit-scrollbar {
@@ -891,11 +884,12 @@ a {
     border-bottom: solid 1px black;
 }
 
-caption { 
+caption {
     display: table-caption;
     padding: 10px 0px 0px 0px;
-    caption-side:top;
-  }
-.container-fluid{
+    caption-side: top;
+}
+
+.container-fluid {
     box-shadow: 0px 3px 10px #42574f;
 }

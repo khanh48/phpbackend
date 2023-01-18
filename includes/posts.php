@@ -1,7 +1,7 @@
 <?php
 require("./connect.php");
 
-$result = $con->query('SELECT COUNT(post_id) AS total FROM posts');
+$result = $con->query('SELECT COUNT(mabaiviet) AS total FROM baiviet');
 $row = $result->fetch_assoc();
 $total_records = $row['total'];
 
@@ -24,20 +24,20 @@ if ($current_page > 0)
 else
     $start = 0;
 
-$re = $con->query("SELECT * FROM posts ORDER BY date DESC LIMIT $start, $limit");
+$re = $con->query("SELECT * FROM baiviet ORDER BY ngaytao DESC LIMIT $start, $limit");
 if ($re->num_rows > 0) {
     $j = 0;
     while ($row = $re->fetch_assoc()) {
         $loggedin = !$logged && $j == 0 ? "mt-0" : "";
         $j++;
-        $username = $row['user_name'];
-        $post = $row['post_id'];
-        $poster = $con->query("SELECT * FROM users WHERE user_name = '$username'")->fetch_assoc();
-        $result_cmt = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$post'")->fetch_assoc();
-        $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE post_id = '$post' AND is_post = true")->fetch_assoc();
+        $username = $row['taikhoan'];
+        $post = $row['mabaiviet'];
+        $poster = $con->query("SELECT * FROM nguoidung WHERE taikhoan = '$username'")->fetch_assoc();
+        $result_cmt = $con->query("SELECT COUNT(mabinhluan) AS total FROM binhluan WHERE mabaiviet = '$post'")->fetch_assoc();
+        $result_like = $con->query("SELECT COUNT(maluotthich) AS total_like FROM luotthich WHERE mabaiviet = '$post' AND loai = true")->fetch_assoc();
         $total_cmt = $result_cmt['total'] > 0 ? $result_cmt['total'] : '';
         $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
-        $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE post_id = '$post' AND user_name = '$my_id'")->fetch_assoc();
+        $liked = $con->query("SELECT COUNT(maluotthich) AS liked FROM luotthich WHERE mabaiviet = '$post' AND taikhoan = '$my_id'")->fetch_assoc();
         $is_liked = '';
         if ($liked["liked"] > 0)
             $is_liked = "fas-liked";
@@ -46,16 +46,16 @@ if ($re->num_rows > 0) {
                 <div class='d-flex justify-content-between $loggedin'>
                     <div class=' c-header'>
                         <span>
-                        <a class='name' href='./profile?user=" . $poster['user_name'] . "'>
-                        <img class='avt' src='" . $poster['avatar'] . "' alt='avatar'></a></span>
+                        <a class='name' href='./profile?user=" . $poster['taikhoan'] . "'>
+                        <img class='avt' src='" . $poster['anhdaidien'] . "' alt='avatar'></a></span>
                         <div class='c-name'>
-                            <span><a class='name' href='./profile?user=" . $poster["user_name"] . "'>" . $poster['hoten'] . "</a>
-                                <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small>
+                            <span><a class='name' href='./profile?user=" . $poster["taikhoan"] . "'>" . $poster['hoten'] . "</a>
+                                <div class='time'><small class='text-secondary'>" . getTime($row['ngaytao']) . "</small>
                                 </div>
                             </span>
                         </div>
                     </div>";
-        if ($myRank === "Admin" || $my_id === $poster['user_name']) {
+        if ($myRank === "Admin" || $my_id === $poster['taikhoan']) {
             echo "<button name='delete-notification' class='btn-close py-1 px-3'
             value='a' data-bs-toggle='modal' data-bs-target='#delete-post' onclick=\"deletePost($post)\"></button>";
         }
@@ -63,17 +63,17 @@ if ($re->num_rows > 0) {
                 <div>
                     <div class='title'>
                         <div class='name'>" . $row['nhom'] . "</div><span>></span>
-                        <div class='name'>" . $row['title'] . "</div>
+                        <div class='name'>" . $row['tieude'] . "</div>
                     </div>
                 </div>
                 <div class='c-body'>
-                " . $row['content'] . "
+                " . $row['noidung'] . "
                 </div>
                 <div class='m-0 hide wh' style='text-align: end;'><span class='read-more'></span></div>";
 
-        $images = $con->query("SELECT * FROM images WHERE `type` = 'post' AND post_id = " . $row['post_id']);
+        $images = $con->query("SELECT * FROM hinhanh WHERE `loai` = 'post' AND mabaiviet = " . $row['mabaiviet']);
         if ($images->num_rows > 0) {
-            echo "<div id='forpost" . $row['post_id'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
+            echo "<div id='forpost" . $row['mabaiviet'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
                 <div class='carousel-inner '>";
             $i = 0;
             while ($img = $images->fetch_assoc()) {
@@ -84,11 +84,11 @@ if ($re->num_rows > 0) {
                         </div>";
             }
             echo "</div>
-                    <button class='carousel-control-prev' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='prev'>
+                    <button class='carousel-control-prev' type='button' data-bs-target='#forpost" . $row['mabaiviet'] . "' data-bs-slide='prev'>
                         <span class='carousel-control-prev-icon' aria-hidden='true'></span>
                         <span class='visually-hidden'>Previous</span>
                     </button>
-                    <button class='carousel-control-next' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='next'>
+                    <button class='carousel-control-next' type='button' data-bs-target='#forpost" . $row['mabaiviet'] . "' data-bs-slide='next'>
                         <span class='carousel-control-next-icon' aria-hidden='true'></span>
                         <span class='visually-hidden'>Next</span>
                     </button>
@@ -97,11 +97,11 @@ if ($re->num_rows > 0) {
 
         echo " <hr class='m-0'>
             <div class='interactive p-1 m-0'>
-                <button class='like p-1' onclick=\" like(" . $row['post_id'] . ",true,'" . $my_id . "', '" . $poster['user_name'] . "');\">
-                    <i class='fas fa-heart action " . $is_liked . "' id='pl" . $row['post_id'] . "'></i>
-                    <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
+                <button class='like p-1' onclick=\" like(" . $row['mabaiviet'] . ",true,'" . $my_id . "', '" . $poster['taikhoan'] . "');\">
+                    <i class='fas fa-heart action " . $is_liked . "' id='pl" . $row['mabaiviet'] . "'></i>
+                    <span class='count-like' id='p" . $row['mabaiviet'] . "'>" . $total_like . "</span>
                 </button>
-                <button class='comment p-1' onclick=\" window.location.href='./post.php?id=" . $row['post_id'] . "'\">
+                <button class='comment p-1' onclick=\" window.location.href='./post.php?id=" . $row['mabaiviet'] . "'\">
             <i class='fas fa-comment action'></i>
             <span class='count-comment'><a href='./post.php'></a>" . $total_cmt . "</span>
 

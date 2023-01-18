@@ -30,17 +30,17 @@ require_once("./includes/header.php");
                 $content = isset($_GET['search-content']) ? $_GET['search-content'] : '';
                 $type = isset($_GET['type']) ? (int)$_GET['type'] : 0;
                 if ($type == 1) {
-                    $sql = "SELECT * FROM posts WHERE title LIKE '%$content%'";
+                    $sql = "SELECT * FROM baiviet WHERE tieude LIKE '%$content%'";
                     $re = $con->query($sql);
                     if ($re->num_rows > 0) {
                         while ($row = $re->fetch_assoc()) {
-                            $username = $row['user_name'];
-                            $poster = $con->query("SELECT * FROM users WHERE user_name = '$username'")->fetch_assoc();
+                            $username = $row['taikhoan'];
+                            $poster = $con->query("SELECT * FROM nguoidung WHERE taikhoan = '$username'")->fetch_assoc();
                             echo "<div class='content'>
                         <div>
                             <div class=' c-header'>
                                 <span>
-                                    <img class='avt' src='" . $poster['avatar'] . "'></span>
+                                    <img class='avt' src='" . $poster['anhdaidien'] . "'></span>
                                 <div class='c-name'><span>
                                         <div class='name'>" . $poster['hoten'] . "</div>
                                         <div class='time'><small class='text-secondary'>... phút trước</small></div>
@@ -50,11 +50,11 @@ require_once("./includes/header.php");
                         <div>
                             <div class='title'>
                                 <div class='name'>" . $row['nhom'] . "</div><span>></span>
-                                <div class='name'>" . $row['title'] . "</div>
+                                <div class='name'>" . $row['tieude'] . "</div>
                             </div>
                         </div>
                         <div class='c-body'>
-                        " . $row['content'] . "
+                        " . $row['noidung'] . "
                         </div>
                         <div class='m-0' style='text-align: end;'><span class='read-more'></span></div>
                         <hr class='m-0'>
@@ -73,7 +73,7 @@ require_once("./includes/header.php");
                         }
                     }
                 } else {
-                    $sql = "SELECT * FROM users WHERE hoten LIKE '%$content%'";
+                    $sql = "SELECT * FROM nguoidung WHERE hoten LIKE '%$content%'";
                     $re = $con->query($sql);
                     if ($re->num_rows > 0) {
                         while ($row = $re->fetch_assoc()) {
@@ -81,7 +81,7 @@ require_once("./includes/header.php");
                                 <div class='pb-2'>
                                 <div class=' c-header'>
                                 <span>
-                                    <img class='avt' src='" . $row['avatar'] . "'></span>
+                                    <img class='avt' src='" . $row['anhdaidien'] . "'></span>
                                 <div class='c-name'><span>
                                         <div class='name'>" . $row['hoten'] . "</div>
                                         <div class='time'><small class='text-secondary'>Hoạt động ... phút trước</small></div>

@@ -19,13 +19,13 @@ class User
 
     function getUser($userID)
     {
-        $post = $this->conn->query("SELECT * FROM users WHERE user_name ='$userID'");
+        $post = $this->conn->query("SELECT * FROM nguoidung WHERE taikhoan ='$userID'");
         return $post->fetch_assoc();
     }
 
     function changePassword($user, $password)
     {
-        $post = $this->conn->query("UPDATE users SET pass = '$password' WHERE user_name ='$user'");
+        $post = $this->conn->query("UPDATE nguoidung SET matkhau = '$password' WHERE taikhoan ='$user'");
         return $post ? true : false;
     }
 
@@ -34,9 +34,9 @@ class User
         $this->likes->deleteLikeWithUserID($userID);
         $this->comments->deleteCommentWithUser($userID);
         $this->posts->deletePostWithUserName($userID);
-        $this->conn->query("DELETE FROM images WHERE owner = '$userID'");
-        $this->conn->query("DELETE FROM notifications WHERE to_user = '$userID' OR from_user = '$userID'");
-        $del = $this->conn->query("DELETE FROM users WHERE user_name = '$userID'");
+        $this->conn->query("DELETE FROM hinhanh WHERE taikhoan = '$userID'");
+        $this->conn->query("DELETE FROM thongbao WHERE nguoinhan = '$userID' OR nguoigui = '$userID'");
+        $del = $this->conn->query("DELETE FROM nguoidung WHERE taikhoan = '$userID'");
         return $del ? true : false;
     }
 }

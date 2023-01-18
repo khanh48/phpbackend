@@ -11,24 +11,25 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->
-        
+
         <div class="logo">
-        <a class="navbar-brand mt-2 mt-lg-0" href="./">
-            <img src="./lib/images/logo.png" height="50" alt="logo">
-        </a><i class="bi bi-bag-fill"></i>
-        <form method="get">
-            <div class="ms-2 search-group">
-                <input class="search" type="text" name="find" placeholder="Tìm kiếm" />
-                <button type="submit" name="go" class="search-btn">
-                    <img src="./lib/images/search_icon.png">
-                </button>
-            </div> 
-        </form><?php
+            <a class="navbar-brand mt-2 mt-lg-0" href="./">
+                <img src="./lib/images/logo.png" height="50" alt="logo">
+            </a><i class="bi bi-bag-fill"></i>
+            <form method="get">
+                <div class="ms-2 search-group">
+                    <input class="search" type="text" name="find" placeholder="Tìm kiếm" />
+                    <button type="submit" name="go" class="search-btn">
+                        <img src="./lib/images/search_icon.png">
+                    </button>
+                </div>
+            </form><?php
                     if (isset($_GET['go'])) {
                         $content = $_GET['find'];
                         echo "<meta http-equiv='refresh' content='0;url=./search.php?search-content=" . $content . "&type=0&search' />";
                     }
-                    ?></div>
+                    ?>
+        </div>
         <!-- Collapsible wrapper -->
 
         <!-- Right elements -->
@@ -53,7 +54,7 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
 
                     <i class="fas fa-bell">
                         <?php
-                            $total = $con->query("SELECT count(id) AS total FROM notifications WHERE to_user = '$my_id' AND readed = 'false'")->fetch_assoc()['total'];
+                            $total = $con->query("SELECT count(mathongbao) AS total FROM thongbao WHERE nguoinhan = '$my_id' AND trangthai = 'false'")->fetch_assoc()['total'];
 
                             if ($total > 0) {
                             ?><span
@@ -66,15 +67,16 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-notify">
                     <?php
-                        $sql = $con->query("SELECT * FROM notifications WHERE to_user = '$my_id' ORDER BY date DESC ");
+                        $sql = $con->query("SELECT * FROM thongbao WHERE nguoinhan = '$my_id' ORDER BY ngaytao DESC ");
                         if ($sql->num_rows > 0) {
                             while ($row = $sql->fetch_assoc()) {
                         ?>
                     <li>
-                        <a class="dropdown-item text-wrap" href="<?php echo $row['url'] . '&r=' . $row['id']; ?>">
-                            <p class="small mb-0"><?php echo getTime($row['date']); ?></p>
-                            <p class="mb-0 <?php if ($row['readed'] == false) echo 'unread'; ?>">
-                                <?php echo $row['msg']; ?></p>
+                        <a class="dropdown-item text-wrap"
+                            href="<?php echo $row['url'] . '&r=' . $row['mathongbao']; ?>">
+                            <p class="small mb-0"><?php echo getTime($row['ngaytao']); ?></p>
+                            <p class="mb-0 <?php if ($row['trangthai'] == false) echo 'unread'; ?>">
+                                <?php echo $row['noidung']; ?></p>
                         </a>
                     </li>
                     <?php
@@ -89,14 +91,14 @@ if (isset($_GET['logout']) && isset($_SESSION['userID'])) {
             <div class="dropdown">
                 <a class="dropdown" href="#" id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    <img src="<?php echo $userObj->getUser($my_id)["avatar"]; ?>" class="rounded-circle" height="25"
+                    <img src="<?php echo $userObj->getUser($my_id)["anhdaidien"]; ?>" class="rounded-circle" height="25"
                         alt="avatar">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
                         <a class="dropdown-item" href="./profile?user=<?php echo $my_id; ?>">Trang cá nhân</a>
                     </li>
-                    
+
                     <li>
                         <a class="dropdown-item" href="./notification">Thông báo</a>
                     </li>

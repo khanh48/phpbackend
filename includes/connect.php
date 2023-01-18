@@ -5,7 +5,7 @@ include_once(dirname(__DIR__) . "/object/user.php");
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "forum";
+$db = "diendan";
 $con = new mysqli($host, $user, $pass, $db);
 if ($con->connect_error) {
     die("Lỗi kết nối với cơ sở dữ liệu.");

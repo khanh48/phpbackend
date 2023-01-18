@@ -18,15 +18,15 @@ if (isset($_POST['delete-post']) && $logged) {
             <?php
             if (isset($_GET["user"])) {
                 $userID = $_GET["user"];
-                $sql = "SELECT * FROM users WHERE user_name = '$userID'";
-                $post = "SELECT COUNT(post_id) AS total_post FROM posts WHERE user_name = '$userID'";
+                $sql = "SELECT * FROM nguoidung WHERE taikhoan = '$userID'";
+                $post = "SELECT COUNT(mabaiviet) AS total_post FROM baiviet WHERE taikhoan = '$userID'";
                 $re_post = $con->query($post);
                 $re = $con->query($sql);
                 $originAvt = '';
                 if ($re->num_rows > 0) {
                     $row = $re->fetch_assoc();
 
-                    $originAvt = $row['avatar'];
+                    $originAvt = $row['anhdaidien'];
                     echo "<div class='content'>
                     <div class='mt-0 ms-2'>
                     <div class=' c-header'>
@@ -91,31 +91,31 @@ if (isset($_POST['delete-post']) && $logged) {
                             <span class='my-auto' data-bs-toggle='modal' data-bs-target='#changePass' id='changePassBtn'>Đổi mật khẩu</span></div>
                         </div></form></div></div>";
                     }
-                    $posts = $con->query("SELECT * FROM posts WHERE user_name='$userID' ORDER BY date DESC");
+                    $posts = $con->query("SELECT * FROM baiviet WHERE taikhoan='$userID' ORDER BY ngaytao DESC");
                     if ($posts->num_rows > 0) {
                         while ($row = $posts->fetch_assoc()) {
-                            $post = $row['post_id'];
+                            $post = $row['mabaiviet'];
                             $poster = $userObj->getUser($userID);
-                            $result_cmt = $con->query("SELECT COUNT(comment_id) AS total FROM comments WHERE post_id = '$post'")->fetch_assoc();
-                            $result_like = $con->query("SELECT COUNT(like_id) AS total_like FROM likes WHERE post_id = '$post' AND is_post = true")->fetch_assoc();
+                            $result_cmt = $con->query("SELECT COUNT(mabinhluan) AS total FROM binhluan WHERE mabaiviet = '$post'")->fetch_assoc();
+                            $result_like = $con->query("SELECT COUNT(maluotthich) AS total_like FROM luotthich WHERE mabaiviet = '$post' AND loai = true")->fetch_assoc();
                             $total_cmt = $result_cmt['total'] > 0 ? $result_cmt['total'] : '';
                             $total_like = $result_like['total_like'] > 0 ? $result_like['total_like'] : '';
-                            $liked = $con->query("SELECT COUNT(like_id) AS liked FROM likes WHERE post_id = '$post' AND user_name = '$my_id'")->fetch_assoc();
+                            $liked = $con->query("SELECT COUNT(maluotthich) AS liked FROM luotthich WHERE mabaiviet = '$post' AND taikhoan = '$my_id'")->fetch_assoc();
                             $is_liked = '';
                             if ($liked["liked"] > 0)
                                 $is_liked = "fas-liked";
                             echo "<div class='content rm'>
                                         <div class='d-flex justify-content-between'>
                                             <div class=' c-header'>
-                                                <span><img class='avt' src='" . $poster['avatar'] . "'></span>
+                                                <span><img class='avt' src='" . $poster['anhdaidien'] . "'></span>
                                                 <div class='c-name'>
                                                     <span><div class='name'>" . $poster['hoten'] . "</div>
-                                                        <div class='time'><small class='text-secondary'>" . getTime($row['date']) . "</small>
+                                                        <div class='time'><small class='text-secondary'>" . getTime($row['ngaytao']) . "</small>
                                                         </div>
                                                     </span>
                                                 </div>
                                             </div>";
-                            if ($myRank === "Admin" || $poster['user_name'] === $my_id) {
+                            if ($myRank === "Admin" || $poster['taikhoan'] === $my_id) {
                                 echo "<button name='delete-notification' class='btn-close py-1 px-3' value='a' data-bs-toggle='modal'
                                                             data-bs-target='#delete-post' onclick=\"deletePost($post)\"></button>";
                             }
@@ -124,17 +124,17 @@ if (isset($_POST['delete-post']) && $logged) {
                                         <div>
                                             <div class='title'>
                                                 <div class='name'>" . $row['nhom'] . "</div><span>></span>
-                                                <div class='name'>" . $row['title'] . "</div>
+                                                <div class='name'>" . $row['tieude'] . "</div>
                                             </div>
                                         </div>
                                         <div class='c-body'>
-                                        " . $row['content'] . "
+                                        " . $row['noidung'] . "
                                         </div>
                                         <div class='m-0 hide wh' style='text-align: end;'><span class='read-more'></span></div>";
 
-                            $images = $con->query("SELECT * FROM images WHERE `type` = 'post' AND post_id = " . $row['post_id']);
+                            $images = $con->query("SELECT * FROM hinhanh WHERE `loai` = 'post' AND mabaiviet = " . $row['mabaiviet']);
                             if ($images->num_rows > 0) {
-                                echo "<div id='forpost" . $row['post_id'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
+                                echo "<div id='forpost" . $row['mabaiviet'] . "' class='carousel slide mt-1' data-bs-ride='carousel'>
                                         <div class='carousel-inner '>";
                                 $i = 0;
                                 while ($img = $images->fetch_assoc()) {
@@ -145,11 +145,11 @@ if (isset($_POST['delete-post']) && $logged) {
                                                 </div>";
                                 }
                                 echo "</div>
-                                            <button class='carousel-control-prev' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='prev'>
+                                            <button class='carousel-control-prev' type='button' data-bs-target='#forpost" . $row['mabaiviet'] . "' data-bs-slide='prev'>
                                                 <span class='carousel-control-prev-icon' aria-hidden='true'></span>
                                                 <span class='visually-hidden'>Previous</span>
                                             </button>
-                                            <button class='carousel-control-next' type='button' data-bs-target='#forpost" . $row['post_id'] . "' data-bs-slide='next'>
+                                            <button class='carousel-control-next' type='button' data-bs-target='#forpost" . $row['mabaiviet'] . "' data-bs-slide='next'>
                                                 <span class='carousel-control-next-icon' aria-hidden='true'></span>
                                                 <span class='visually-hidden'>Next</span>
                                             </button>
@@ -158,11 +158,11 @@ if (isset($_POST['delete-post']) && $logged) {
 
                             echo " <hr class='m-0'>
                                     <div class='interactive p-1 m-0'>
-                                        <button class='like p-1' onclick=\" like(" . $row['post_id'] . ",true,'" . $my_id . "', '" . $poster['user_name'] . "');\">
-                                            <i class='fas fa-heart action " . $is_liked . "' id='pl" . $row['post_id'] . "'></i>
-                                            <span class='count-like' id='p" . $row['post_id'] . "'>" . $total_like . "</span>
+                                        <button class='like p-1' onclick=\" like(" . $row['mabaiviet'] . ",true,'" . $my_id . "', '" . $poster['taikhoan'] . "');\">
+                                            <i class='fas fa-heart action " . $is_liked . "' id='pl" . $row['mabaiviet'] . "'></i>
+                                            <span class='count-like' id='p" . $row['mabaiviet'] . "'>" . $total_like . "</span>
                                         </button>
-                                        <button class='comment p-1' onclick=\" window.location.href='./post.php?id=" . $row['post_id'] . "'\">
+                                        <button class='comment p-1' onclick=\" window.location.href='./post.php?id=" . $row['mabaiviet'] . "'\">
                                     <i class='fas fa-comment action'></i>
                                     <span class='count-comment'><a href='./post.php'></a>" . $total_cmt . "</span>
                         
@@ -203,7 +203,7 @@ if (isset($_POST['delete-post']) && $logged) {
                         }
                     }
 
-                    $sql = $con->query("UPDATE users SET hoten = '$ht', gioitinh = '$gt', ngaysinh = '$ns', sodienthoai = '$sdt', sothich = '$st', avatar = '$avt' WHERE user_name = '$userID'");
+                    $sql = $con->query("UPDATE nguoidung SET hoten = '$ht', gioitinh = '$gt', ngaysinh = '$ns', sodienthoai = '$sdt', sothich = '$st', anhdaidien = '$avt' WHERE taikhoan = '$userID'");
                     if ($sql) {
                         echo "<meta http-equiv='refresh' content='0'>";
                     } else echo $con->error;

@@ -56,7 +56,7 @@
             <?php
             if (isset($_SESSION['userID'])) {
                 $user_id = $_SESSION['userID'];
-                $sql = "SELECT * FROM users WHERE user_name = '$user_id'";
+                $sql = "SELECT * FROM nguoidung WHERE taikhoan = '$user_id'";
                 $re = $con->query($sql)->fetch_assoc();
                 echo "<li>
                     <a href='./profile?user=$my_id'>Hồ sơ cá nhân</a>

@@ -10,7 +10,7 @@ if (isset($_POST['user']) && isset($_POST['oldPass']) && isset($_POST['newPass']
 
     $user = $userObj->getUser($user_name);
     $array = array();
-    if (md5($oldPass) !== $user['pass'])
+    if (md5($oldPass) !== $user['matkhau'])
         $array = array("type" => "failed", "message" => "Mật khẩu không chính xác.");
     elseif (!preg_match($patternPass, $newPass))
         $array = array("type" => "failed", "message" => "Mật khẩu mới không hợp lệ.");

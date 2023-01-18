@@ -9,7 +9,7 @@ if (isset($_POST['fullName']) && isset($_POST['userName']) && isset($_POST['pwd'
     $patternUser = "/^(?=.*[A-Za-z])[A-Za-z\d]{6,13}$/";
     $patternPass = "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,15}$/";
 
-    $checkUser = $con->query("SELECT * FROM users WHERE user_name = '$userName'");
+    $checkUser = $con->query("SELECT * FROM nguoidung WHERE taikhoan = '$userName'");
 
     if ($lenName < 5 || $lenName > 50) {
         echo json_encode(array("type" => "name_size", "message" => "Họ tên phải từ 5 đến 50 ký tự."), JSON_UNESCAPED_UNICODE);
@@ -22,7 +22,7 @@ if (isset($_POST['fullName']) && isset($_POST['userName']) && isset($_POST['pwd'
     } elseif ($checkUser->num_rows > 0) {
         echo json_encode(array("type" => "user_already_exists", "message" => "Tài khoản đã tồn tại."), JSON_UNESCAPED_UNICODE);
     } else {
-        $con->query("INSERT INTO users (user_name, pass, hoten) VALUES('$userName', '" . md5($password) . "', '$fullName')");
+        $con->query("INSERT INTO nguoidung (taikhoan, matkhau, hoten) VALUES('$userName', '" . md5($password) . "', '$fullName')");
         echo json_encode(array("type" => "success", "message" => "Tạo tài khoản thành công."), JSON_UNESCAPED_UNICODE);
     }
 }

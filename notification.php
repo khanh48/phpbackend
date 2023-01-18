@@ -3,13 +3,13 @@ require("./includes/connect.php");
 include("./includes/header.php");
 
 if (isset($_GET['delete-notification']) && $logged) {
-    $con->query("DELETE FROM notifications WHERE id = " . $_GET['delete-notification']);
+    $con->query("DELETE FROM thongbao WHERE mathongbao = " . $_GET['delete-notification']);
 }
 if (isset($_POST['make-as-read']) && $logged) {
-    $con->query("UPDATE notifications SET readed = 1 WHERE to_user = '$my_id'");
+    $con->query("UPDATE thongbao SET trangthai = 1 WHERE nguoinhan = '$my_id'");
 }
 if (isset($_POST['delete-notifications'])) {
-    $con->query("DELETE FROM notifications WHERE readed = 1 AND to_user = '$my_id'");
+    $con->query("DELETE FROM thongbao WHERE trangthai = 1 AND nguoinhan = '$my_id'");
 }
 ?>
 
@@ -43,19 +43,19 @@ if (isset($_POST['delete-notifications'])) {
             <div class="content">
                 <form method="get">
                     <?php
-                    $notifications = $con->query("SELECT * FROM notifications WHERE to_user = '$my_id' ORDER BY date DESC");
+                    $notifications = $con->query("SELECT * FROM thongbao WHERE nguoinhan = '$my_id' ORDER BY ngaytao DESC");
                     if ($notifications->num_rows > 0) {
                         while ($row = $notifications->fetch_assoc()) {
                     ?>
 
                     <div class="alert alert-dismissible py-0 my-0">
                         <button name="delete-notification" class="btn-close py-1"
-                            value="<?php echo $row['id']; ?>"></button>
-                        <a href="<?php echo $row['url'] . "&r=" . $row['id']; ?>">
+                            value="<?php echo $row['mathongbao']; ?>"></button>
+                        <a href="<?php echo $row['url'] . "&r=" . $row['mathongbao']; ?>">
                             <div class="notification d-flex justify-content-between">
                                 <span
-                                    class="<?php echo $row['readed'] ? "" : "unread"; ?>"><?php echo $row['msg']; ?></span>
-                                <small class="text-secondary"><?php echo getTime($row['date']); ?></small>
+                                    class="<?php echo $row['trangthai'] ? "" : "unread"; ?>"><?php echo $row['noidung']; ?></span>
+                                <small class="text-secondary"><?php echo getTime($row['ngaytao']); ?></small>
                             </div>
                         </a>
                     </div>

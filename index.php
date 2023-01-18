@@ -44,11 +44,11 @@ if (isset($_POST['delete-post']) && $logged) {
 
                                 if ($check) {
                                     if (move_uploaded_file($files["tmp_name"][$i], $target_file)) {
-                                        $con->query("INSERT INTO images(`owner`,`type`,`url`,`post_id`) VALUES('$my_id', 'post', '$target_file', $milliseconds)");
+                                        $con->query("INSERT INTO hinhanh(`taikhoan`,`loai`,`url`,`mabaiviet`) VALUES('$my_id', 'post', '$target_file', $milliseconds)");
                                     }
                                 }
                             }
-                            $sql = "INSERT INTO posts(post_id, title, content, user_name, nhom) VALUES($milliseconds, '$title', '$content', '$user_id','$group')";
+                            $sql = "INSERT INTO baiviet(mabaiviet, tieude, noidung, taikhoan, nhom) VALUES($milliseconds, '$title', '$content', '$user_id','$group')";
                             if ($con->query($sql)) {
                                 echo "<meta http-equiv='refresh' content='0,url=./post.php?id=" . $milliseconds . "'>";
                             } else {
